@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ profile.name }} - Portfolio</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/logo.ico') }}" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+
+  <!--
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Styling for the language toggle button */
+    .lang-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 100;
+      background: var(--bg-gradient-onyx);
+      border: 1px solid var(--jet);
+      border-radius: 10px;
+      padding: 5px 12px;
+      box-shadow: var(--shadow-2);
+    }
+    .lang-btn {
+      color: var(--light-gray);
+      font-weight: var(--fw-500);
+      font-size: var(--fs-8);
+      transition: color var(--transition-1);
+    }
+    .lang-btn:hover {
+      color: var(--orange-yellow-crayola);
+    }
+    .lang-btn.active-lang {
+      color: var(--orange-yellow-crayola);
+      font-weight: var(--fw-600);
+    }
+    .lang-divider {
+      color: var(--jet);
+      margin: 0 4px;
+    }
+
+    /* Project links integration styling */
+    .project-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      margin-left: 10px;
+    }
+    .project-link-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--fs-7);
+      color: var(--orange-yellow-crayola);
+      transition: color var(--transition-1);
+    }
+    .project-link-item:hover {
+      color: var(--white-1);
+    }
+
+    /* Toast/Notification container for Contact Form */
+    .alert-msg {
+      margin-top: 15px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: var(--fs-6);
+      font-weight: var(--fw-300);
+    }
+    .alert-success {
+      background: rgba(46, 204, 113, 0.15);
+      border: 1px solid #2ecc71;
+      color: #2ecc71;
+    }
+    .alert-error {
+      background: rgba(231, 76, 60, 0.15);
+      border: 1px solid #e74c3c;
+      color: #e74c3c;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Language Switcher -->
+  <div class="lang-toggle">
+    <a href="?lang=fr" class="lang-btn {% if lang == 'fr' %}active-lang{% endif %}">FR</a>
+    <span class="lang-divider">|</span>
+    <a href="?lang=en" class="lang-btn {% if lang == 'en' %}active-lang{% endif %}">EN</a>
+  </div>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #SIDEBAR
+    -->
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="{{ profile.avatar or url_for('static', filename='assets/images/my-avatar.png') }}" alt="{{ profile.name }}" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="{{ profile.name }}">{{ profile.name }}</h1>
+
+          <p class="title">
+            {% if lang == 'fr' %}
+              {{ profile.title_fr }}
+            {% else %}
+              {{ profile.title_en }}
+            {% endif %}
+          </p>
+          {% if profile.sub_title_fr or profile.sub_title_en %}
+          <p class="title" style="margin-top: 5px; background: rgba(201,169,110,0.15); color: #E0C080;">
+            {% if lang == 'fr' %}
+              {{ profile.sub_title_fr }}
+            {% else %}
+              {{ profile.sub_title_en }}
+            {% endif %}
+          </p>
+          {% endif %}
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>{% if lang == 'fr' %}Afficher les contacts{% else %}Show Contacts{% endif %}</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:{{ profile.email }}" class="contact-link">{{ profile.email }}</a>
+            </div>
+
+          </li>
+
+          {% if profile.phone %}
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">{% if lang == 'fr' %}Téléphone{% else %}Phone{% endif %}</p>
+              <a href="tel:{{ profile.phone }}" class="contact-link">{{ profile.phone }}</a>
+            </div>
+
+          </li>
+          {% endif %}
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">{% if lang == 'fr' %}Date de naissance{% else %}Birthday{% endif %}</p>
+              <time datetime="2002-06-23">
+                {% if lang == 'fr' %}
+                  {{ profile.birthday_fr }}
+                {% else %}
+                  {{ profile.birthday_en }}
+                {% endif %}
+              </time>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">{% if lang == 'fr' %}Localisation{% else %}Location{% endif %}</p>
+              <address>
+                {% if lang == 'fr' %}
+                  {{ profile.location_fr }}
+                {% else %}
+                  {{ profile.location_en }}
+                {% endif %}
+              </address>
+            </div>
+
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+
+          {% if profile.linkedin %}
+          <li class="social-item">
+            <a href="{{ profile.linkedin }}" target="_blank" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+          {% endif %}
+
+          {% if profile.github %}
+          <li class="social-item">
+            <a href="{{ profile.github }}" target="_blank" class="social-link">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+          {% endif %}
+
+        </ul>
+
+      </div>
+
+    </aside>
+
+
+
+
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <button class="navbar-link active" data-nav-link>{% if lang == 'fr' %}À propos{% else %}About{% endif %}</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>{% if lang == 'fr' %}CV{% else %}Resume{% endif %}</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Portfolio</button>
+          </li>
+
+          {% if blog_posts %}
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Blog</button>
+          </li>
+          {% endif %}
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Contact</button>
+          </li>
+
+        </ul>
+
+      </nav>
+
+
+
+
+
+      <!--
+        - #ABOUT
+      -->
+
+      <article class="about active" data-page="about">
+
+        <header>
+          <h2 class="h2 article-title">{% if lang == 'fr' %}À propos de moi{% else %}About me{% endif %}</h2>
+        </header>
+
+        <section class="about-text">
+          <p>
+            {% if lang == 'fr' %}
+              {{ profile.bio_fr | replace('\n', '<br>') | safe }}
+            {% else %}
+              {{ profile.bio_en | replace('\n', '<br>') | safe }}
+            {% endif %}
+          </p>
+        </section>
+
+
+        <!--
+          - service (What I'm doing)
+        -->
+
+        <section class="service">
+
+          <h3 class="h3 service-title">{% if lang == 'fr' %}Ce que je fais{% else %}What I'm doing{% endif %}</h3>
+
+          <ul class="service-list">
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <ion-icon name="code-slash-outline" style="font-size: 40px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">{% if lang == 'fr' %}Développement Backend{% else %}Backend Development{% endif %}</h4>
+
+                <p class="service-item-text">
+                  {% if lang == 'fr' %}
+                    Conception d'APIs robustes, performantes et scalables avec Python (Django, FastAPI, Flask).
+                  {% else %}
+                    Designing robust, performant, and scalable APIs with Python (Django, FastAPI, Flask).
+                  {% endif %}
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <ion-icon name="server-outline" style="font-size: 40px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">DevOps & Linux</h4>
+
+                <p class="service-item-text">
+                  {% if lang == 'fr' %}
+                    Administration système Linux, conteneurisation (Docker, Podman) et automatisation CI/CD.
+                  {% else %}
+                    Linux system administration, containerization (Docker, Podman), and CI/CD automation.
+                  {% endif %}
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <ion-icon name="sparkles-outline" style="font-size: 40px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">{% if lang == 'fr' %}Intégration IA & Automatisation{% else %}AI Integration & Automation{% endif %}</h4>
+
+                <p class="service-item-text">
+                  {% if lang == 'fr' %}
+                    Fine-tuning, orchestrateurs multi-agents et automatisation de workflows avec n8n ou Zapier.
+                  {% else %}
+                    Fine-tuning, multi-agent orchestrations, and workflow automation with n8n or Zapier.
+                  {% endif %}
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <ion-icon name="phone-portrait-outline" style="font-size: 40px; color: var(--orange-yellow-crayola);"></ion-icon>
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">{% if lang == 'fr' %}Applications Mobiles{% else %}Mobile Apps{% endif %}</h4>
+
+                <p class="service-item-text">
+                  {% if lang == 'fr' %}
+                    Développement d'applications mobiles cross-plateformes fluides et modernes avec Flutter.
+                  {% else %}
+                    Development of fluid and modern cross-platform mobile applications with Flutter.
+                  {% endif %}
+                </p>
+              </div>
+
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+
+
+
+      <!--
+        - #RESUME
+      -->
+
+      <article class="resume" data-page="resume">
+
+        <header>
+          <h2 class="h2 article-title">{% if lang == 'fr' %}Mon CV{% else %}Resume{% endif %}</h2>
+        </header>
+
+        {% if educations %}
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+
+            <h3 class="h3">{% if lang == 'fr' %}Formation{% else %}Education{% endif %}</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            {% for edu in educations %}
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">
+                {% if lang == 'fr' %}{{ edu.degree_fr }}{% else %}{{ edu.degree_en }}{% endif %}
+              </h4>
+
+              <span>{{ edu.period }}</span>
+
+              <p class="timeline-text" style="color: var(--vegas-gold); margin-bottom: 5px;">
+                {% if lang == 'fr' %}{{ edu.institution_fr }}{% else %}{{ edu.institution_en }}{% endif %}
+              </p>
+
+              {% if edu.details_fr or edu.details_en %}
+              <p class="timeline-text">
+                {% if lang == 'fr' %}{{ edu.details_fr }}{% else %}{{ edu.details_en }}{% endif %}
+              </p>
+              {% endif %}
+
+            </li>
+            {% endfor %}
+
+          </ol>
+
+        </section>
+        {% endif %}
+
+        {% if experiences %}
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="briefcase-outline"></ion-icon>
+            </div>
+
+            <h3 class="h3">{% if lang == 'fr' %}Expérience professionnelle{% else %}Experience{% endif %}</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            {% for exp in experiences %}
+            <li class="timeline-item">
+
+              <h4 class="h4 timeline-item-title">
+                {% if lang == 'fr' %}{{ exp.title_fr }}{% else %}{{ exp.title_en }}{% endif %}
+              </h4>
+
+              <span>{{ exp.period }}</span>
+
+              {% if exp.company_fr or exp.company_en %}
+              <p class="timeline-text" style="color: var(--vegas-gold); margin-bottom: 5px; font-style: italic;">
+                {% if lang == 'fr' %}{{ exp.company_fr }}{% else %}{{ exp.company_en }}{% endif %}
+              </p>
+              {% endif %}
+
+              <ul style="list-style-type: disc; margin-left: 20px; color: var(--light-gray);">
+                {% set bullets = exp.bullets_fr | from_json if lang == 'fr' else exp.bullets_en | from_json %}
+                {% if bullets %}
+                  {% for bullet in bullets %}
+                    <li style="margin-bottom: 5px; line-height: 1.6; font-size: var(--fs-6); font-weight: var(--fw-300);">
+                      {{ bullet }}
+                    </li>
+                  {% endfor %}
+                {% endif %}
+              </ul>
+
+            </li>
+            {% endfor %}
+
+          </ol>
+
+        </section>
+        {% endif %}
+
+        {% if skills %}
+        <section class="skill">
+
+          <h3 class="h3 skills-title">{% if lang == 'fr' %}Mes compétences{% else %}My skills{% endif %}</h3>
+
+          <ul class="skills-list content-card">
+
+            {% for s in skills %}
+            <li class="skills-item">
+
+              <div class="title-wrapper">
+                <h5 class="h5">
+                  {% if lang == 'fr' %}{{ s.category_fr }}{% else %}{{ s.category_en }}{% endif %}
+                </h5>
+                <data value="{{ s.percentage or 80 }}">{{ s.percentage or 80 }}%</data>
+              </div>
+
+              <p class="timeline-text" style="font-size: var(--fs-7); margin-bottom: 8px;">
+                {% if lang == 'fr' %}{{ s.skills_fr }}{% else %}{{ s.skills_en }}{% endif %}
+              </p>
+
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: {{ s.percentage or 80 }}%;"></div>
+              </div>
+
+            </li>
+            {% endfor %}
+
+          </ul>
+
+        </section>
+        {% endif %}
+
+      </article>
+
+
+
+
+
+      <!--
+        - #PORTFOLIO
+      -->
+
+      <article class="portfolio" data-page="portfolio">
+
+        <header>
+          <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+
+        {% if projects %}
+        <section class="projects">
+
+          <ul class="filter-list">
+
+            <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Web design</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Applications</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Web development</button>
+            </li>
+
+          </ul>
+
+          <div class="filter-select-box">
+
+            <button class="filter-select" data-select>
+
+              <div class="select-value" data-selecct-value>{% if lang == 'fr' %}Sélectionner une catégorie{% else %}Select category{% endif %}</div>
+
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+
+            </button>
+
+            <ul class="select-list">
+
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Web design</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Applications</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Web development</button>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <ul class="project-list">
+
+            {% for proj in projects %}
+            <li class="project-item active" data-filter-item data-category="{{ proj.category or 'web development' }}">
+              <div>
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="{{ proj.image or url_for('static', filename='assets/images/project-1.jpg') }}" alt="{{ proj.name }}" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">{{ proj.name }}</h3>
+
+                {% if proj.stack %}
+                <p class="project-category" style="color: var(--vegas-gold); font-style: italic; font-size: var(--fs-7);">
+                  {{ proj.stack }}
+                </p>
+                {% endif %}
+
+                <p class="project-category" style="margin-top: 5px; margin-bottom: 5px; color: var(--light-gray);">
+                  {% if lang == 'fr' %}{{ proj.desc_fr }}{% else %}{{ proj.desc_en }}{% endif %}
+                </p>
+
+                <div class="project-links">
+                  {% if proj.github_link %}
+                  <a href="{{ proj.github_link }}" target="_blank" class="project-link-item">
+                    <ion-icon name="logo-github"></ion-icon>
+                    <span>GitHub</span>
+                  </a>
+                  {% endif %}
+                  {% if proj.demo_link %}
+                  <a href="{{ proj.demo_link }}" target="_blank" class="project-link-item">
+                    <ion-icon name="link-outline"></ion-icon>
+                    <span>Demo</span>
+                  </a>
+                  {% endif %}
+                </div>
+
+              </div>
+            </li>
+            {% endfor %}
+
+          </ul>
+
+        </section>
+        {% endif %}
+
+      </article>
+
+
+
+
+
+      <!--
+        - #BLOG
+      -->
+
+      {% if blog_posts %}
+      <article class="blog" data-page="blog">
+
+        <header>
+          <h2 class="h2 article-title">Blog</h2>
+        </header>
+
+        <section class="blog-posts">
+
+          <ul class="blog-posts-list">
+
+            {% for post in blog_posts %}
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="{{ post.image or url_for('static', filename='assets/images/blog-1.jpg') }}" alt="{% if lang == 'fr' %}{{ post.title_fr }}{% else %}{{ post.title_en }}{% endif %}" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">
+                      {% if lang == 'fr' %}{{ post.category_fr or 'Général' }}{% else %}{{ post.category_en or 'General' }}{% endif %}
+                    </p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2026-02-23">
+                      {% if lang == 'fr' %}{{ post.date_fr }}{% else %}{{ post.date_en }}{% endif %}
+                    </time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">
+                    {% if lang == 'fr' %}{{ post.title_fr }}{% else %}{{ post.title_en }}{% endif %}
+                  </h3>
+
+                  <p class="blog-text">
+                    {% if lang == 'fr' %}{{ post.content_fr }}{% else %}{{ post.content_en }}{% endif %}
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+            {% endfor %}
+
+          </ul>
+
+        </section>
+
+      </article>
+      {% endif %}
+
+
+
+
+
+      <!--
+        - #CONTACT
+      -->
+
+      <article class="contact" data-page="contact">
+
+        <header>
+          <h2 class="h2 article-title">Contact</h2>
+        </header>
+
+        <section class="mapbox" data-mapbox>
+          <figure>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.1002237078335!2d2.0543781!3d6.4023719!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1024317f27718e8d%3A0xe6bf44845b41cf1a!2sINSTI%20Lokossa!5e0!3m2!1sen!2sbj!4v1647608789441!5m2!1sen!2sbj"
+              width="400" height="300" loading="lazy"></iframe>
+          </figure>
+        </section>
+
+        <section class="contact-form">
+
+          <h3 class="h3 form-title">{% if lang == 'fr' %}Formulaire de contact{% else %}Contact Form{% endif %}</h3>
+
+          <form action="{{ url_for('submit_contact') }}" method="POST" class="form" data-form>
+
+            <div class="input-wrapper">
+              <input type="text" name="fullname" class="form-input" placeholder="{% if lang == 'fr' %}Nom complet{% else %}Full name{% endif %}" required data-form-input>
+
+              <input type="email" name="email" class="form-input" placeholder="{% if lang == 'fr' %}Adresse email{% else %}Email address{% endif %}" required data-form-input>
+            </div>
+
+            <textarea name="message" class="form-input" placeholder="{% if lang == 'fr' %}Votre message{% else %}Your Message{% endif %}" required data-form-input></textarea>
+
+            <button class="form-btn" type="submit" disabled data-form-btn>
+              <ion-icon name="paper-plane"></ion-icon>
+              <span>{% if lang == 'fr' %}Envoyer le message{% else %}Send Message{% endif %}</span>
+            </button>
+
+          </form>
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, msg in messages %}
+                <div class="alert-msg {% if category == 'success' %}alert-success{% else %}alert-error{% endif %}">
+                  {{ msg }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+        </section>
+
+      </article>
+
+    </div>
+
+  </main>
+
+
+
+
+
+
+  <!--
+    - custom js link
+  -->
+  <script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
