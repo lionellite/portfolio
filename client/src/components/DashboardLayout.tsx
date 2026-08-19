@@ -21,15 +21,18 @@ import {
 } from "@/components/ui/sidebar";
 import { startLogin } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users } from "lucide-react";
+import { BookOpenText, ExternalLink, FolderKanban, LayoutDashboard, LogOut, Mail, PanelLeft, UserRound } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
 const menuItems = [
-  { icon: LayoutDashboard, label: "Page 1", path: "/" },
-  { icon: Users, label: "Page 2", path: "/some-path" },
+  { icon: LayoutDashboard, label: "Vue d’ensemble", path: "/admin" },
+  { icon: UserRound, label: "Profil & parcours", path: "/admin/profil" },
+  { icon: FolderKanban, label: "Projets", path: "/admin/projets" },
+  { icon: BookOpenText, label: "Articles", path: "/admin/articles" },
+  { icon: Mail, label: "Messages", path: "/admin/messages" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -62,10 +65,10 @@ export default function DashboardLayout({
         <div className="flex flex-col items-center gap-8 p-8 max-w-md w-full">
           <div className="flex flex-col items-center gap-6">
             <h1 className="text-2xl font-semibold tracking-tight text-center">
-              Sign in to continue
+              Connexion requise
             </h1>
             <p className="text-sm text-muted-foreground text-center max-w-sm">
-              Access to this dashboard requires authentication. Continue to launch the login flow.
+              L’administration est réservée au propriétaire de ce portfolio.
             </p>
           </div>
           <Button
@@ -73,8 +76,21 @@ export default function DashboardLayout({
             size="lg"
             className="w-full shadow-lg hover:shadow-xl transition-all"
           >
-            Sign in
+            Se connecter
           </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (user.role !== "admin") {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <div className="flex flex-col items-center gap-4 p-8 max-w-md w-full text-center">
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary">Accès protégé</p>
+          <h1 className="text-3xl font-semibold tracking-tight">Cet espace est privé.</h1>
+          <p className="text-sm text-muted-foreground">Votre compte est authentifié, mais ne possède pas les droits d’administration de ce portfolio.</p>
+          <Button onClick={() => window.location.assign("/")} variant="outline">Retourner au portfolio</Button>
         </div>
       </div>
     );
@@ -169,7 +185,7 @@ function DashboardLayoutContent({
               {!isCollapsed ? (
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="font-semibold tracking-tight truncate">
-                    Navigation
+                    Lionel. / Admin
                   </span>
                 </div>
               ) : null}
@@ -219,12 +235,16 @@ function DashboardLayoutContent({
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem onClick={() => window.open("/", "_blank")} className="cursor-pointer">
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  <span>Voir le portfolio</span>
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={logout}
                   className="cursor-pointer text-destructive focus:text-destructive"
                 >
                   <LogOut className="mr-2 h-4 w-4" />
-                  <span>Sign out</span>
+                  <span>Se déconnecter</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

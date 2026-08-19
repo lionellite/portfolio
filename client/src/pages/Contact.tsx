@@ -1,0 +1,12 @@
+import PublicLayout from "@/components/PublicLayout";
+import { trpc } from "@/lib/trpc";
+import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
+import { FormEvent, useState } from "react";
+import { toast } from "sonner";
+
+export default function Contact() {
+  const [name, setName] = useState(""); const [email, setEmail] = useState(""); const [message, setMessage] = useState("");
+  const send = trpc.contact.submit.useMutation({ onSuccess: () => { toast.success("Votre message a bien été envoyé."); setName(""); setEmail(""); setMessage(""); }, onError: () => toast.error("Impossible d’envoyer le message pour le moment.") });
+  const submit = (event: FormEvent) => { event.preventDefault(); send.mutate({ name, email, message }); };
+  return <PublicLayout><section className="contact-page"><div className="contact-intro"><div className="eyebrow"><Mail size={14} /> Entrons en contact</div><h1>Une idée, un défi<br /><em>ou une collaboration ?</em></h1><p>Je suis ouvert aux échanges autour du backend, de l’infrastructure, du DevOps et de projets numériques ambitieux.</p><div className="contact-direct"><a href="mailto:liolisena@gmail.com"><Mail size={18} /> liolisena@gmail.com</a><span><MapPin size={18} /> Bénin</span><a href="https://linkedin.com/in/lionellite" target="_blank" rel="noreferrer"><Linkedin size={18} /> LinkedIn</a><a href="https://github.com/lionellite" target="_blank" rel="noreferrer"><Github size={18} /> GitHub</a></div></div><form className="contact-form" onSubmit={submit}><div className="form-label">Envoyez un message</div><label>Votre nom<input required minLength={2} maxLength={160} value={name} onChange={e => setName(e.target.value)} placeholder="Prénom et nom" /></label><label>Votre e-mail<input required type="email" maxLength={320} value={email} onChange={e => setEmail(e.target.value)} placeholder="vous@entreprise.com" /></label><label>Votre message<textarea required minLength={10} maxLength={5000} value={message} onChange={e => setMessage(e.target.value)} placeholder="Parlez-moi de votre projet, de votre idée ou de votre besoin…" rows={6} /></label><button className="send-button" type="submit" disabled={send.isPending}>{send.isPending ? "Envoi en cours…" : <>Envoyer le message <Send size={17} /></>}</button><p className="form-note">Votre message est traité avec attention. Je vous répondrai dès que possible.</p></form></section></PublicLayout>;
+}
