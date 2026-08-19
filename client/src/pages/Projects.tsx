@@ -18,11 +18,11 @@ export default function Projects() {
     <PublicLayout>
       <section className="page-hero">
         <div className="eyebrow"><FolderKanban size={14} /> Travaux sélectionnés</div>
-        <h1>Des produits conçus<br /><em>pour avoir de l’impact.</em></h1>
+        <h1>Des produits conçus<br /><em>pour répondre à un besoin précis.</em></h1>
         <p>Une sélection de projets où se rencontrent développement backend, infrastructure, intelligence artificielle et expériences numériques utiles.</p>
       </section>
       <section className="project-list-section">
-        {isLoading ? <div className="loading-copy">Chargement des projets…</div> : isError ? <div className="empty-public"><FolderKanban size={28} /><p>Les projets sont temporairement indisponibles. Réessayez dans un instant.</p></div> : projects?.length ? (
+        {isLoading ? <div className="project-list project-list--skeleton" aria-label="Chargement des projets">{[1, 2, 3].map(item => <div className="project-card project-card--skeleton" key={item}><div className="project-card__cover" /><div className="project-card__content"><div /><div className="project-card__main"><span /><span /><span /></div></div></div>)}</div> : isError ? <div className="empty-public"><FolderKanban size={28} /><p>Les projets sont temporairement indisponibles. Réessayez dans un instant.</p></div> : projects?.length ? (
           <div className="project-list">
             {projects.map((project, index) => (
               <article className="project-card" key={project.id}>

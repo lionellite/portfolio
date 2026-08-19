@@ -17,3 +17,14 @@
 - [x] Écrire et exécuter des tests Vitest couvrant les validations, protections d’accès et opérations de contenu.
 - [x] Vérifier visuellement les parcours desktop et mobile, puis corriger les anomalies identifiées.
 - [x] Finaliser la documentation d’utilisation de l’administration et créer le point de restauration du projet.
+- [x] Remplacer les éléments décoratifs génériques et retirer les signaux visuels sans fonction claire.
+- [x] Formaliser une échelle typographique, des hauteurs de ligne et un système de rayons cohérents.
+- [x] Harmoniser la mise en page, l’emplacement des composants et les états de survol sur les pages publiques et administratives.
+- [x] Ajouter des animations utiles avec courbes d’accélération définies et respect des préférences de mouvement réduit.
+- [x] Renforcer les chargements, retours d’erreur et indicateurs d’action pour tous les parcours asynchrones restants.
+- [x] Réviser les textes génériques et vérifier l’utilité de chaque lien social et interaction visible.
+- [x] Contrôler les améliorations visuelles sur desktop et mobile, puis créer un point de restauration.
+- [x] Retirer le dernier élément décoratif générique de l’administration et préciser les dernières formulations publiques vagues.
+- [x] Étendre les jetons de rayons, d’espacement et d’accélération aux composants administratifs restants.
+- [x] Ajouter des squelettes cohérents aux écrans d’administration qui chargent des listes de données.
+- [x] Créer le point de restauration de la passe de raffinement après sa validation complète.
