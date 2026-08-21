@@ -36,3 +36,10 @@
 - [x] Mettre en place une typographie plus technologique et une palette rouge cohérente sur les pages publiques.
 - [x] Harmoniser les composants, les états interactifs et l’administration avec les nouveaux accents rouges.
 - [x] Vérifier les contrastes et le rendu responsive, puis créer un point de restauration.
+- [x] Auditer les structures visuelles existantes et définir une direction UI distinctive à trois teintes.
+- [x] Recomposer la hiérarchie des pages publiques avec des rythmes, espaces et composants moins génériques.
+- [x] Appliquer une palette cohérente de deux teintes fortes et un neutre à l’interface publique et privée.
+- [x] Ajouter des micro-interactions utiles et des états de transition fluides respectant le mouvement réduit.
+- [x] Vérifier la refonte sur desktop et mobile, puis créer un point de restauration.
+- [x] Désactiver les mouvements non essentiels lorsque la préférence de mouvement réduit est active.
+- [ ] Créer le point de restauration final de la refonte UI/UX validée.

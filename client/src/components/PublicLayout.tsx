@@ -1,4 +1,4 @@
-import { Code2, Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 
@@ -12,8 +12,8 @@ const links = [
 export function BrandMark() {
   return (
     <Link href="/" className="brand-mark" aria-label="Accueil du portfolio de Lionel Adoukonou">
-      <span className="brand-mark__icon"><Code2 size={17} strokeWidth={2.4} /></span>
-      <span>Lionel<span className="brand-mark__dot">.</span></span>
+      <span className="brand-mark__glyph">LA</span>
+      <span className="brand-mark__word"><strong>Lionel<span className="brand-mark__dot">.</span></strong><small>SYS / PORTFOLIO</small></span>
     </Link>
   );
 }

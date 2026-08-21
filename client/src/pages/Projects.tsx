@@ -1,13 +1,12 @@
 import PublicLayout from "@/components/PublicLayout";
+import ProjectSignal from "@/components/ProjectSignal";
 import { trpc } from "@/lib/trpc";
 import { ArrowUpRight, FolderKanban, Github } from "lucide-react";
 import { Link } from "wouter";
 
 function ProjectCover({ title, imageUrl, index }: { title: string; imageUrl: string | null; index: number }) {
   return imageUrl ? <img src={imageUrl} alt={`Couverture du projet ${title}`} className="project-card__image" /> : (
-    <div className={`project-card__visual visual-${(index % 5) + 1}`} aria-hidden="true">
-      <span>{title.slice(0, 2).toUpperCase()}</span><i /><b />
-    </div>
+    <ProjectSignal title={title} index={index} className="project-card__visual" />
   );
 }
 
@@ -18,8 +17,8 @@ export default function Projects() {
     <PublicLayout>
       <section className="page-hero">
         <div className="eyebrow"><FolderKanban size={14} /> Travaux sélectionnés</div>
-        <h1>Des produits conçus<br /><em>pour répondre à un besoin précis.</em></h1>
-        <p>Une sélection de projets où se rencontrent développement backend, infrastructure, intelligence artificielle et expériences numériques utiles.</p>
+        <h1>Des systèmes conçus<br /><em>pour tenir en production.</em></h1>
+        <p>Des cas concrets où l’API, la donnée, le déploiement et l’interface sont traités comme un même système à rendre fiable.</p>
       </section>
       <section className="project-list-section">
         {isLoading ? <div className="project-list project-list--skeleton" aria-label="Chargement des projets">{[1, 2, 3].map(item => <div className="project-card project-card--skeleton" key={item}><div className="project-card__cover" /><div className="project-card__content"><div /><div className="project-card__main"><span /><span /><span /></div></div></div>)}</div> : isError ? <div className="empty-public"><FolderKanban size={28} /><p>Les projets sont temporairement indisponibles. Réessayez dans un instant.</p></div> : projects?.length ? (
