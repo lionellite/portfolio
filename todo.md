@@ -43,3 +43,7 @@
 - [x] Vérifier la refonte sur desktop et mobile, puis créer un point de restauration.
 - [x] Désactiver les mouvements non essentiels lorsque la préférence de mouvement réduit est active.
 - [x] Créer le point de restauration final de la refonte UI/UX validée.
+- [x] Auditer les composants partagés et formaliser le système Terminal éditorial.
+- [x] Recomposer les pages publiques autour de fiches techniques, de données de contexte et de navigation de console.
+- [x] Recomposer l’administration comme une console de contrôle avec états, métriques et actions structurées.
+- [ ] Vérifier le nouveau frontend Terminal éditorial sur desktop et mobile, puis créer un point de restauration.
