@@ -28,3 +28,7 @@
 - [x] Étendre les jetons de rayons, d’espacement et d’accélération aux composants administratifs restants.
 - [x] Ajouter des squelettes cohérents aux écrans d’administration qui chargent des listes de données.
 - [x] Créer le point de restauration de la passe de raffinement après sa validation complète.
+- [x] Auditer la documentation existante et structurer l’ensemble des guides du projet.
+- [x] Rédiger un README complet pour l’installation, l’architecture, la sécurité et les scripts.
+- [x] Rédiger les guides de gestion de contenu, d’exploitation, de maintenance et de publication.
+- [x] Vérifier les documents, créer une archive ZIP propre et joindre les livrables.
