@@ -42,4 +42,4 @@
 - [x] Ajouter des micro-interactions utiles et des états de transition fluides respectant le mouvement réduit.
 - [x] Vérifier la refonte sur desktop et mobile, puis créer un point de restauration.
 - [x] Désactiver les mouvements non essentiels lorsque la préférence de mouvement réduit est active.
-- [ ] Créer le point de restauration final de la refonte UI/UX validée.
+- [x] Créer le point de restauration final de la refonte UI/UX validée.
