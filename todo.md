@@ -32,3 +32,7 @@
 - [x] Rédiger un README complet pour l’installation, l’architecture, la sécurité et les scripts.
 - [x] Rédiger les guides de gestion de contenu, d’exploitation, de maintenance et de publication.
 - [x] Vérifier les documents, créer une archive ZIP propre et joindre les livrables.
+- [x] Auditer les usages typographiques et colorimétriques actuels du portfolio.
+- [x] Mettre en place une typographie plus technologique et une palette rouge cohérente sur les pages publiques.
+- [x] Harmoniser les composants, les états interactifs et l’administration avec les nouveaux accents rouges.
+- [x] Vérifier les contrastes et le rendu responsive, puis créer un point de restauration.

@@ -182,8 +182,10 @@
   --ink-soft: #203136;
   --paper: #f4f1e9;
   --paper-deep: #e8e2d7;
-  --orange: #e86f3b;
-  --orange-light: #f4b36d;
+  --orange: #d31935;
+  --orange-light: #ff777b;
+  --red-deep: #9f1026;
+  --red-pale: #f4d7d9;
   --lime: #c9df72;
   --line: rgba(16, 28, 32, 0.15);
   --radius-control: .4rem;
@@ -297,3 +299,16 @@ a { text-decoration: none; }
 .admin-primary-action, .admin-submit, .admin-stat, .admin-item-actions button, .admin-ghost { transition-timing-function: var(--ease-out); }
 .admin-loading-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding-top: 2.5rem; }.admin-loading-grid span { display: block; min-height: 118px; border-radius: var(--radius-card); background: linear-gradient(100deg, rgba(16,28,32,.06) 25%, rgba(16,28,32,.1) 37%, rgba(16,28,32,.06) 63%); background-size: 400% 100%; animation: content-shimmer 1.4s var(--ease-in-out) infinite; }.admin-loading-grid span:nth-child(n + 5) { grid-column: span 2; min-height: 260px; }
 @media (max-width: 600px) { .admin-loading-grid { grid-template-columns: 1fr 1fr; }.admin-loading-grid span:nth-child(n + 5) { grid-column: span 2; min-height: 180px; } }
+
+/* Tech red identity */
+body, .admin-form input:not([type="checkbox"]), .admin-form textarea, .contact-form input, .contact-form textarea, .rich-editor__area { font-family: "Space Grotesk", sans-serif; }
+.eyebrow, .section-kicker, .hero-badge p, .hero-bottom, .skill-panel__index, .featured-card__meta p, .timeline-year, .timeline-count, .project-card__number, .tag-row span, .note-card__accent, .note-meta, .detail-side > p, .contact-form label, .admin-eyebrow, .admin-form label, .status-pill, .admin-section-title > span { font-family: "IBM Plex Mono", monospace; }
+.hero-copy h1, .page-hero h1, .detail-header h1, .article-header h1, .contact-intro h1, .statement-section h2, .section-heading h2, .timeline-intro h2, .closing-section h2, .featured-card__meta h3, .project-card__heading h2, .detail-copy h2, .note-card h2, .form-label, .admin-header h1, .admin-card__heading h2, .admin-card__heading h3, .admin-section-title h2 { font-family: "Space Grotesk", sans-serif !important; font-style: normal; font-weight: 600; letter-spacing: -.065em; }
+.hero-copy h1 em, .page-hero h1 em, .statement-section h2 em, .featured-section h2 em, .timeline-intro h2 em, .closing-section h2 em, .contact-intro h1 em { color: var(--orange-light); font-style: normal; font-weight: 700; }
+.hero-portrait { background: var(--orange); box-shadow: 14px 14px 0 var(--orange); }.hero-portrait__monogram { background: linear-gradient(155deg, #f4b2b5, #d31935); }.hero-portrait__monogram span, .hero-badge span, .featured-card__cover span, .project-card__visual span, .detail-cover--abstract span { font-family: "Space Grotesk", sans-serif; font-style: normal; font-weight: 600; letter-spacing: -.1em; }
+.button-primary, .send-button { background: var(--orange); border-color: var(--orange); color: #fff8f6; }.button-primary:hover, .send-button:hover { background: var(--red-deep); }.button-primary--ink { background: var(--ink); border-color: var(--ink); }.button-primary--ink:hover { background: #253c42; }
+.brand-mark__icon { background: var(--orange); color: #fff8f6; }.brand-mark__dot, .header-cta span, .section-kicker, .eyebrow--warm, .project-card__number, .timeline-year, .timeline-count { color: var(--orange); }
+.orbit-2 { border-color: rgba(211,25,53,.52); }.hero-orbit { border-color: rgba(211,25,53,.25); }.hero-badge { border-left: 3px solid var(--orange); }.status-dot { box-shadow: 0 0 0 4px rgba(211,25,53,.16); }
+.visual-1 { background: linear-gradient(135deg, #b80f2b, #f26b72); }.visual-2 { background: linear-gradient(135deg, #811227, #d94355); }.visual-3 { background: linear-gradient(135deg, #d82a43, #ff9694); }.visual-4 { background: linear-gradient(135deg, #6e1022, #ae273b); }.visual-5 { background: linear-gradient(135deg, #a41730, #e15c62); }.detail-cover--abstract { background: linear-gradient(135deg, var(--orange-light), var(--red-deep)); }
+.closing-section { background: var(--orange); }.closing-section .section-kicker { color: #6c0719; }.closing-section > p:not(.section-kicker) { color: #5d0a17; }.closing-mark { color: var(--orange-light); }
+.admin-eyebrow, .admin-form label, .admin-section-title > span, .admin-stat strong { color: var(--orange); }.admin-primary-action, .admin-submit { background: var(--red-deep); }.admin-primary-action:hover, .admin-submit:hover { background: var(--orange); }.admin-form input:focus, .admin-form textarea:focus, .contact-form input:focus, .contact-form textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(211,25,53,.13); }.admin-checkboxes input { accent-color: var(--orange); }.admin-card__heading > a, .admin-add-inline { color: var(--red-deep); }.admin-item-actions button:hover, .admin-ghost:hover { color: var(--red-deep); border-color: #e9a0aa; background: #fff6f6; }
