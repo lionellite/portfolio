@@ -174,7 +174,7 @@ function DashboardLayoutContent({
           disableTransition={isResizing}
         >
           <SidebarHeader className="h-16 justify-center admin-sidebar__header">
-            <div className="flex items-center gap-3 px-2 transition-all w-full">
+            <div className="flex items-center gap-3 px-2 transition-all w-full admin-sidebar__brand">
               <button
                 onClick={toggleSidebar}
                 className="h-8 w-8 flex items-center justify-center hover:bg-accent rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
@@ -183,10 +183,12 @@ function DashboardLayoutContent({
                 <PanelLeft className="h-4 w-4 text-muted-foreground" />
               </button>
               {!isCollapsed ? (
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="font-semibold tracking-tight truncate">
-                    LA / CONTROL
-                  </span>
+                <div className="flex items-center gap-2 min-w-0 admin-sidebar__brand-copy">
+                  <span className="admin-sidebar__brand-mark">LA</span>
+                  <div>
+                    <strong>CONTROL // 01</strong>
+                    <small><i /> LINK_STABLE</small>
+                  </div>
                 </div>
               ) : null}
             </div>
@@ -224,12 +226,12 @@ function DashboardLayoutContent({
                       {user?.name?.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
+                  <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden admin-sidebar__operator">
                     <p className="text-sm font-medium truncate leading-none">
                       {user?.name || "-"}
                     </p>
                     <p className="text-xs text-muted-foreground truncate mt-1.5">
-                      {user?.email || "-"}
+                      OWNER_NODE / {user?.email || "-"}
                     </p>
                   </div>
                 </button>
@@ -267,9 +269,7 @@ function DashboardLayoutContent({
               <SidebarTrigger className="h-9 w-9 rounded-lg bg-background" />
               <div className="flex items-center gap-3">
                 <div className="flex flex-col gap-1">
-                  <span className="tracking-tight text-foreground">
-                    {activeMenuItem?.label ?? "Menu"}
-                  </span>
+                  <span className="tracking-tight text-foreground admin-mobile-title">CONTROL / {activeMenuItem?.label ?? "Menu"}</span>
                 </div>
               </div>
             </div>

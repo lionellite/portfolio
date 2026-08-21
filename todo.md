@@ -47,3 +47,12 @@
 - [x] Recomposer les pages publiques autour de fiches techniques, de données de contexte et de navigation de console.
 - [x] Recomposer l’administration comme une console de contrôle avec états, métriques et actions structurées.
 - [x] Vérifier le nouveau frontend Terminal éditorial sur desktop et mobile, puis créer un point de restauration.
+- [x] Définir une scène 3D de systèmes reliés et une stratégie de repli accessible pour les appareils contraints.
+- [x] Installer Three.js et intégrer une scène interactive dans l’accueil du portfolio.
+- [x] Harmoniser la scène 3D avec l’identité Terminal éditorial et le reste des parcours publics et administratifs.
+- [ ] Vérifier les performances, les contrôles et les vues responsive de la version 3D, puis créer un point de restauration.
+- [x] Densifier les sections aval de l’accueil et les fiches projets avec des données de télémétrie et de système réellement structurantes.
+- [x] Renforcer l’identité Terminal de l’administration avec une signature, des états de santé et une hiérarchie de contrôle plus affirmés.
+- [x] Répéter le contrôle desktop et mobile après ces ajustements, puis créer le point de restauration final 3D.
+- [x] Densifier les sections aval de l’accueil avec des modules de télémétrie et de preuve technique cohérents avec les fiches systèmes.
+- [ ] Créer le point de restauration final de la version 3D après les derniers ajustements de cohérence.
