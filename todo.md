@@ -46,4 +46,4 @@
 - [x] Auditer les composants partagés et formaliser le système Terminal éditorial.
 - [x] Recomposer les pages publiques autour de fiches techniques, de données de contexte et de navigation de console.
 - [x] Recomposer l’administration comme une console de contrôle avec états, métriques et actions structurées.
-- [ ] Vérifier le nouveau frontend Terminal éditorial sur desktop et mobile, puis créer un point de restauration.
+- [x] Vérifier le nouveau frontend Terminal éditorial sur desktop et mobile, puis créer un point de restauration.
