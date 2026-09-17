@@ -31,12 +31,12 @@ export default function SystemScene({ className = "" }: SystemSceneProps) {
 
       const core = new THREE.Mesh(
         new THREE.IcosahedronGeometry(1.25, 2),
-        new THREE.MeshBasicMaterial({ color: 0xc9ff3a, wireframe: true, transparent: true, opacity: 0.88 }),
+        new THREE.MeshBasicMaterial({ color: 0x3d8fe8, wireframe: true, transparent: true, opacity: 0.88 }),
       );
       root.add(core);
       const inner = new THREE.Mesh(
         new THREE.IcosahedronGeometry(0.52, 1),
-        new THREE.MeshBasicMaterial({ color: 0xff5d42, wireframe: true, transparent: true, opacity: 0.78 }),
+        new THREE.MeshBasicMaterial({ color: 0x8fc2ff, wireframe: true, transparent: true, opacity: 0.78 }),
       );
       root.add(inner);
 
@@ -45,8 +45,8 @@ export default function SystemScene({ className = "" }: SystemSceneProps) {
         [-.15, 2.25, -.4], [.45, -2.15, .25], [-1.78, .15, -.85], [1.75, .1, .75],
       ] as const;
       const nodeGeometry = new THREE.SphereGeometry(0.105, 14, 14);
-      const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0xc9ff3a });
-      const warningMaterial = new THREE.MeshBasicMaterial({ color: 0xff5d42 });
+      const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x3d8fe8 });
+      const warningMaterial = new THREE.MeshBasicMaterial({ color: 0x8fc2ff });
       const nodes = nodePositions.map((position, index) => {
         const node = new THREE.Mesh(nodeGeometry, index === 1 || index === 5 ? warningMaterial : nodeMaterial);
         node.position.set(position[0], position[1], position[2]);
@@ -58,7 +58,7 @@ export default function SystemScene({ className = "" }: SystemSceneProps) {
       segments.forEach(([from, to]) => linePositions.push(...nodePositions[from], ...nodePositions[to]));
       const lineGeometry = new THREE.BufferGeometry();
       lineGeometry.setAttribute("position", new THREE.Float32BufferAttribute(linePositions, 3));
-      const lines = new THREE.LineSegments(lineGeometry, new THREE.LineBasicMaterial({ color: 0x94a99b, transparent: true, opacity: 0.5 }));
+      const lines = new THREE.LineSegments(lineGeometry, new THREE.LineBasicMaterial({ color: 0x8ca8c6, transparent: true, opacity: 0.5 }));
       root.add(lines);
 
       const particles = new Float32Array((lowPower ? 90 : 170) * 3);
@@ -72,7 +72,7 @@ export default function SystemScene({ className = "" }: SystemSceneProps) {
       }
       const particlesGeometry = new THREE.BufferGeometry();
       particlesGeometry.setAttribute("position", new THREE.BufferAttribute(particles, 3));
-      const particleCloud = new THREE.Points(particlesGeometry, new THREE.PointsMaterial({ color: 0xc9ff3a, size: lowPower ? .028 : .035, transparent: true, opacity: .64, sizeAttenuation: true }));
+      const particleCloud = new THREE.Points(particlesGeometry, new THREE.PointsMaterial({ color: 0x6caaf0, size: lowPower ? .028 : .035, transparent: true, opacity: .64, sizeAttenuation: true }));
       root.add(particleCloud);
 
       const pointer = new THREE.Vector2();
