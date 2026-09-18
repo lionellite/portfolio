@@ -1,5 +1,4 @@
 import PublicLayout from "@/components/PublicLayout";
-import SystemScene from "@/components/SystemScene";
 import { trpc } from "@/lib/trpc";
 import { ArrowRight, ArrowUpRight, Check, Cloud, Code2, Database, Github, Linkedin, Mail, Server, ShieldCheck, Workflow } from "lucide-react";
 import { Link } from "wouter";
@@ -51,10 +50,11 @@ export default function Home() {
             <Link href="/contact" className="lite-button lite-button--outline">Démarrer une conversation <Mail size={16} /></Link>
           </div>
         </div>
-        <div className="lite-hero__scene" aria-label="Topologie interactive du système">
-          <div className="lite-scene__label"><span>TOPOLOGY_MODULE</span><strong>LIVE_RENDER</strong></div>
-          <SystemScene className="lite-scene" />
-          <div className="lite-scene__meta"><span>NETWORK: RELAYED</span><span>STACK: PY / LINUX</span><span>ZONE: BÉNIN</span></div>
+        <div className="lite-hero__profile-card">
+          <div className="lite-profile-card__header"><span>PROFILE_MODULE</span><strong>AVAILABLE</strong></div>
+          <div className="lite-profile-card__body"><span className="lite-profile-card__initials">LA</span><div><strong>{profile?.fullName ?? "Lionel Adoukonou"}</strong><p>{profile?.headline ?? "Backend / DevOps Engineer"}</p></div></div>
+          <div className="lite-profile-card__facts"><div><span>FOCUS</span><strong>BACKEND</strong></div><div><span>STACK</span><strong>PY / LINUX</strong></div><div><span>ZONE</span><strong>{profile?.location ?? "Bénin"}</strong></div></div>
+          <div className="lite-profile-card__note"><span /> {profile?.availability ?? "Ouvert aux opportunités techniques"}</div>
         </div>
       </section>
 
