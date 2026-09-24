@@ -1,0 +1,59 @@
+# Project TODO
+
+- [x] Créer une identité visuelle élégante, responsive et accessible pour le portfolio public.
+- [x] Structurer la base de données pour le profil, les compétences, les expériences, les formations, les projets, les articles et les messages de contact.
+- [x] Initialiser le profil de Lionel Adoukonou à partir des CV fournis.
+- [x] Créer la page d’accueil publique avec biographie, compétences, parcours, formations et appels à l’action.
+- [x] Créer la section publique des projets avec pages et cartes de présentation.
+- [x] Créer le blog public avec liste d’articles et page de détail.
+- [x] Créer la page de contact avec validation des champs nom, e-mail et message.
+- [x] Enregistrer les demandes de contact et envoyer une notification au propriétaire à chaque soumission.
+- [x] Protéger l’espace d’administration par OAuth et vérifier le rôle administrateur côté serveur et côté interface.
+- [x] Construire le tableau de bord d’administration avec navigation dédiée.
+- [x] Permettre la modification du profil, des compétences, expériences et formations dans l’administration.
+- [x] Permettre l’ajout, la modification, la suppression et le téléversement d’image de couverture pour les projets.
+- [x] Permettre la création, l’édition, la publication, la dépublication et la suppression d’articles avec éditeur riche.
+- [x] Ajouter des états de chargement, d’erreur, vides et de confirmation aux parcours publics et administratifs.
+- [x] Écrire et exécuter des tests Vitest couvrant les validations, protections d’accès et opérations de contenu.
+- [x] Vérifier visuellement les parcours desktop et mobile, puis corriger les anomalies identifiées.
+- [x] Finaliser la documentation d’utilisation de l’administration et créer le point de restauration du projet.
+- [x] Remplacer les éléments décoratifs génériques et retirer les signaux visuels sans fonction claire.
+- [x] Formaliser une échelle typographique, des hauteurs de ligne et un système de rayons cohérents.
+- [x] Harmoniser la mise en page, l’emplacement des composants et les états de survol sur les pages publiques et administratives.
+- [x] Ajouter des animations utiles avec courbes d’accélération définies et respect des préférences de mouvement réduit.
+- [x] Renforcer les chargements, retours d’erreur et indicateurs d’action pour tous les parcours asynchrones restants.
+- [x] Réviser les textes génériques et vérifier l’utilité de chaque lien social et interaction visible.
+- [x] Contrôler les améliorations visuelles sur desktop et mobile, puis créer un point de restauration.
+- [x] Retirer le dernier élément décoratif générique de l’administration et préciser les dernières formulations publiques vagues.
+- [x] Étendre les jetons de rayons, d’espacement et d’accélération aux composants administratifs restants.
+- [x] Ajouter des squelettes cohérents aux écrans d’administration qui chargent des listes de données.
+- [x] Créer le point de restauration de la passe de raffinement après sa validation complète.
+- [x] Auditer la documentation existante et structurer l’ensemble des guides du projet.
+- [x] Rédiger un README complet pour l’installation, l’architecture, la sécurité et les scripts.
+- [x] Rédiger les guides de gestion de contenu, d’exploitation, de maintenance et de publication.
+- [x] Vérifier les documents, créer une archive ZIP propre et joindre les livrables.
+- [x] Auditer les usages typographiques et colorimétriques actuels du portfolio.
+- [x] Mettre en place une typographie plus technologique et une palette rouge cohérente sur les pages publiques.
+- [x] Harmoniser les composants, les états interactifs et l’administration avec les nouveaux accents rouges.
+- [x] Vérifier les contrastes et le rendu responsive, puis créer un point de restauration.
+- [x] Auditer les structures visuelles existantes et définir une direction UI distinctive à trois teintes.
+- [x] Recomposer la hiérarchie des pages publiques avec des rythmes, espaces et composants moins génériques.
+- [x] Appliquer une palette cohérente de deux teintes fortes et un neutre à l’interface publique et privée.
+- [x] Ajouter des micro-interactions utiles et des états de transition fluides respectant le mouvement réduit.
+- [x] Vérifier la refonte sur desktop et mobile, puis créer un point de restauration.
+- [x] Désactiver les mouvements non essentiels lorsque la préférence de mouvement réduit est active.
+- [x] Créer le point de restauration final de la refonte UI/UX validée.
+- [x] Auditer les composants partagés et formaliser le système Terminal éditorial.
+- [x] Recomposer les pages publiques autour de fiches techniques, de données de contexte et de navigation de console.
+- [x] Recomposer l’administration comme une console de contrôle avec états, métriques et actions structurées.
+- [x] Vérifier le nouveau frontend Terminal éditorial sur desktop et mobile, puis créer un point de restauration.
+- [x] Définir une scène 3D de systèmes reliés et une stratégie de repli accessible pour les appareils contraints.
+- [x] Installer Three.js et intégrer une scène interactive dans l’accueil du portfolio.
+- [x] Harmoniser la scène 3D avec l’identité Terminal éditorial et le reste des parcours publics et administratifs.
+- [x] Vérifier les performances, les contrôles et les vues responsive de la version 3D, puis créer un point de restauration.
+- [x] Densifier les sections aval de l’accueil et les fiches projets avec des données de télémétrie et de système réellement structurantes.
+- [x] Renforcer l’identité Terminal de l’administration avec une signature, des états de santé et une hiérarchie de contrôle plus affirmés.
+- [x] Répéter le contrôle desktop et mobile après ces ajustements, puis créer le point de restauration final 3D.
+- [x] Densifier les sections aval de l’accueil avec des modules de télémétrie et de preuve technique cohérents avec les fiches systèmes.
+- [x] Créer le point de restauration final de la version 3D après les derniers ajustements de cohérence.
+- [x] Vérifier et documenter explicitement le comportement de performance de la scène Three.js sur desktop et mobile.
