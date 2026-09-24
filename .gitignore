@@ -1,6 +1,0 @@
-__pycache__/
-*.pyc
-instance/
-flask_server.log
-uploads/
-.pytest_cache/
