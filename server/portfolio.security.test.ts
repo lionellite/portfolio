@@ -26,6 +26,14 @@ describe("administration du portfolio", () => {
     await expect(caller.projects.listAll()).rejects.toMatchObject({ code: "FORBIDDEN" });
   });
 
+  it("reconnaît le propriétaire OAuth comme administrateur", async () => {
+    const ownerOpenId = process.env.OWNER_OPEN_ID;
+    if (!ownerOpenId) return;
+    const context = createContext("user");
+    const caller = appRouter.createCaller({ ...context, user: { ...context.user, openId: ownerOpenId } });
+    await expect(caller.auth.me()).resolves.toMatchObject({ openId: ownerOpenId, role: "admin" });
+  });
+
   it("valide le format d’un message de contact avant toute écriture", async () => {
     const caller = appRouter.createCaller({ ...createContext("user"), user: null });
     await expect(caller.contact.submit({ name: "A", email: "adresse-invalide", message: "court" })).rejects.toMatchObject({ code: "BAD_REQUEST" });

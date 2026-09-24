@@ -285,3 +285,8 @@
 .lite-profile-card__note { justify-content: flex-start; border-top: 1px solid #dfe5ec; color: #687485; }
 .lite-profile-card__note span { width: 7px; height: 7px; border-radius: 50%; background: #0051ba; box-shadow: 0 0 0 4px #e9f2ff; }
 @media (max-width: 600px) { .lite-profile-card__body { min-height: 180px; padding: 24px; } .lite-profile-card__initials { width: 68px; height: 68px; font-size: 1.45rem; } .lite-profile-card__body > div > strong { font-size: .78rem; } .lite-profile-card__body p { font-size: .76rem; } .lite-profile-card__facts > div { padding: 10px; } .lite-profile-card__facts strong { font-size: .56rem; } }
+
+.terminal-header__tools { display: flex; align-items: center; gap: 8px; }
+.terminal-language { min-height: 28px; padding: 0 8px; color: #0051ba; background: #fff; border: 1px solid #b9c8da; border-radius: 3px; font: 700 .58rem "Space Mono", monospace; cursor: pointer; transition: background .2s ease, color .2s ease; }
+.terminal-language:hover, .terminal-language:focus-visible { color: #fff; background: #0051ba; outline: none; }
+@media (max-width: 700px) { .terminal-header__tools { margin-left: auto; margin-right: 8px; } .terminal-header__tools .terminal-header__command { display: none; } }

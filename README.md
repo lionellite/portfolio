@@ -1,54 +1,49 @@
-# Portfolio de Lionel Adoukonou
+# Lionel Adoukonou Portfolio
 
-Ce dépôt contient le portfolio personnel de **Lionel Adoukonou**. Il associe une vitrine publique consacrée au profil, aux projets, aux articles et au contact, avec un espace d’administration privé réservé au propriétaire via OAuth.
+Personal portfolio for **Lionel Adoukonou**, Backend, DevOps and Cloud engineer. The project combines a public portfolio for the profile, projects, technical notes and contact with a private OAuth-protected administration console.
 
-Le projet privilégie une présentation éditoriale et technique : une navigation publique responsive, des contenus gérés en base de données, des images stockées de manière sécurisée, un blog avec texte riche assaini et des notifications e-mail pour les demandes de contact.
+The public interface uses English by default and automatically detects French browser preferences. Visitors can switch between English and French from the language control in the header; the choice is persisted locally.
 
-## Sommaire
+## Features
 
-| Document | Objet |
+- Responsive public pages: home, projects, project details, blog, blog details and contact.
+- Static profile card and editorial blue/graphite visual system with no WebGL or 3D runtime.
+- Automatic language detection with English fallback and an English/French switcher.
+- Private admin console for profile, skills, experience, education, projects, articles and messages.
+- OAuth authentication through Manus.
+- Owner access recognized through `OWNER_OPEN_ID` even when the persisted user role has not yet synchronized to `admin`.
+- Server-side `adminProcedure` protection for every administrative query and mutation.
+- S3-compatible image storage for portraits and project covers.
+- Sanitized rich text for blog content.
+- Resend notifications for contact messages.
+- Loading, error and empty states throughout the public and admin experiences.
+
+## Stack
+
+| Layer | Technology |
 | --- | --- |
-| [Guide d’administration](ADMIN_GUIDE.md) | Gérer le profil, les projets, les articles et les messages. |
-| [Architecture](docs/ARCHITECTURE.md) | Comprendre les couches applicatives, les données et les routes. |
-| [Gestion de contenu](docs/CONTENT_MANAGEMENT.md) | Publier des projets, articles, visuels et parcours. |
-| [Exploitation et maintenance](docs/OPERATIONS.md) | Contrôler la qualité, les tests, la sécurité et les sauvegardes. |
-| [Publication](docs/DEPLOYMENT.md) | Préparer une version publiable et configurer le domaine. |
-| [Dépannage](docs/TROUBLESHOOTING.md) | Diagnostiquer les erreurs courantes. |
+| Client | React 19, TypeScript, Vite, Wouter, TanStack Query, Tailwind CSS 4, Lucide |
+| Server | Express, tRPC 11, SuperJSON |
+| Data | Drizzle ORM, MySQL/TiDB |
+| Authentication | Manus OAuth |
+| Storage | S3-compatible object storage |
+| Email | Resend |
+| Testing | Vitest |
 
-## Fonctionnalités
+## Getting started
 
-| Domaine | Fonctionnalités livrées |
-| --- | --- |
-| **Site public** | Accueil, parcours, compétences, projets, blog, pages de détail et formulaire de contact. |
-| **Administration** | Gestion du profil, des compétences, expériences, formations, projets, images, articles et messages. |
-| **Sécurité** | Authentification OAuth, contrôle du rôle administrateur côté serveur et nettoyage du HTML riche. |
-| **Communication** | Enregistrement des messages, notification propriétaire et notification e-mail transactionnelle. |
-| **Qualité d’interface** | Responsive design, états vides et d’erreur, squelettes de chargement, indicateurs de traitement et préférence de mouvement réduit. |
-
-## Stack technique
-
-L’application repose sur **React 19**, **TypeScript**, **Vite**, **Tailwind CSS 4**, **Express**, **tRPC 11**, **Drizzle ORM** et une base MySQL/TiDB. L’authentification OAuth, le stockage d’images compatible S3 et les notifications sont intégrés à l’environnement de projet.
-
-| Couche | Technologies et responsabilité |
-| --- | --- |
-| Interface | React, Wouter, TanStack Query, Tailwind CSS, Lucide. |
-| Serveur | Express et tRPC pour les contrats d’API typés. |
-| Données | Drizzle ORM et MySQL/TiDB pour les contenus et métadonnées. |
-| Fichiers | Stockage objet pour les portraits et couvertures de projets. |
-| E-mail | Resend pour les alertes de formulaire de contact. |
-
-## Démarrage local
-
-### Prérequis
-
-Utilisez **Node.js 22** et **pnpm**. L’environnement doit fournir une base de données accessible et les variables d’authentification prévues par le projet. Ne créez jamais de fichier `.env` contenant des secrets destinés à être commis.
+Use Node.js 22 and pnpm. The runtime must provide a reachable database and the environment variables listed below. Never commit a `.env` file or a secret.
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Le serveur de développement démarre avec l’interface et le serveur applicatif. Pour une vérification de qualité avant toute livraison, exécutez :
+The development server runs the client and application server together.
+
+## Quality checks
+
+Run the following before opening a pull request:
 
 ```bash
 pnpm check
@@ -56,40 +51,63 @@ pnpm test
 pnpm build
 ```
 
-## Scripts disponibles
+The focused authentication, authorization, content and security tests run without external email credentials. The Resend integration tests require `RESEND_API_KEY` when the full suite is executed.
 
-| Commande | Usage |
+## Environment variables
+
+| Variable | Purpose |
 | --- | --- |
-| `pnpm dev` | Lance le serveur de développement avec surveillance des fichiers. |
-| `pnpm check` | Vérifie le typage TypeScript sans produire de build. |
-| `pnpm test` | Exécute la suite Vitest. |
-| `pnpm build` | Produit le build front-end et le bundle serveur. |
-| `pnpm start` | Lance le build de production. |
-| `pnpm format` | Formate les fichiers avec Prettier. |
-| `pnpm db:push` | Génère et applique les migrations Drizzle. À réserver aux changements de schéma validés. |
+| `DATABASE_URL` | MySQL/TiDB connection string |
+| `JWT_SECRET` | Session cookie signing secret |
+| `VITE_APP_ID` | Manus OAuth application ID |
+| `OAUTH_SERVER_URL` | OAuth service URL |
+| `VITE_OAUTH_PORTAL_URL` | OAuth login portal URL exposed to the client |
+| `OWNER_OPEN_ID` | Open ID of the portfolio owner; grants admin access |
+| `RESEND_API_KEY` | Resend API key for contact notifications |
+| `BUILT_IN_FORGE_API_URL` / `BUILT_IN_FORGE_API_KEY` | Manus built-in services |
+| Storage variables | Provided by the configured WebDev environment |
 
-## Configuration et secrets
+Secrets must remain server-side. Do not expose database URLs, JWT secrets, Resend keys or OAuth credentials in client code.
 
-Les valeurs de configuration sont injectées dans l’environnement. Les principales variables attendues sont `DATABASE_URL`, `JWT_SECRET`, `VITE_APP_ID`, `OAUTH_SERVER_URL`, `OWNER_OPEN_ID`, `RESEND_API_KEY` et les clés de stockage fournies par l’environnement.
+## Administration
 
-> **Sécurité.** N’exposez jamais une clé Resend, une chaîne de connexion, un secret JWT ou un jeton OAuth dans le code client, les captures d’écran, les tickets ou l’archive publique du projet.
+Open `/admin` and use the Manus OAuth sign-in flow. The server grants administrative access only to a user with the `admin` role or to the user whose `openId` matches `OWNER_OPEN_ID`. Administrative procedures remain protected server-side even if a user manually navigates to an admin route.
 
-## Structure de dépôt
+After authentication, the console provides dedicated areas for:
+
+- Profile, skills, experience and education.
+- Published and draft projects, including image uploads.
+- Blog articles and rich text content.
+- Contact messages and notification status.
+
+See [ADMIN_GUIDE.md](ADMIN_GUIDE.md) for the operational workflow. Additional technical documentation is available in [docs/](docs/).
+
+## Repository structure
 
 ```text
-client/             Interface React et styles
-server/             Routeurs tRPC, accès aux données et services serveur
-drizzle/            Schéma et migrations de base de données
-shared/             Types et constantes partagées
-docs/               Documentation technique et guides d’exploitation
-ADMIN_GUIDE.md      Guide d’administration fonctionnelle
-todo.md              Historique de réalisation et suivi du projet
+client/             React pages, components, contexts and global styles
+server/             tRPC routers, authentication, database helpers and services
+drizzle/            Drizzle schema and migrations
+shared/             Shared constants and types
+docs/               Architecture, deployment, operations and troubleshooting guides
+ADMIN_GUIDE.md      Administration guide
+todo.md             Project implementation history
 ```
 
-## Règles de contribution
+## Git workflow
 
-Toute évolution fonctionnelle doit être ajoutée à `todo.md` avant implémentation, couverte par des tests pertinents, vérifiée en TypeScript et contrôlée visuellement sur desktop et mobile. Les changements de schéma doivent respecter l’ordre : schéma Drizzle, migration générée, revue SQL, application et test.
+Use a feature branch for changes and open a pull request against `master`:
 
-## Licence
+```bash
+git switch -c feature/admin-i18n-readme
+git add .
+git commit -m "fix: restore admin access and add bilingual interface"
+git push -u github feature/admin-i18n-readme
+gh pr create --repo lionellite/portfolio --base master --head feature/admin-i18n-readme
+```
 
-Le code est distribué sous licence **MIT**, conformément au fichier de configuration du projet. Les contenus personnels, textes, images et éléments de marque du portfolio restent sous le contrôle de Lionel Adoukonou.
+Do not force-push or merge an unrelated repository into `master` without reviewing the PR diff and confirming the intended replacement. This repository is prepared to be reviewed as a complete portfolio application.
+
+## License
+
+The source is distributed under the MIT license. Personal content, photography, written material and brand elements remain under Lionel Adoukonou’s control.

@@ -3,6 +3,7 @@ import ProjectSignal from "@/components/ProjectSignal";
 import { trpc } from "@/lib/trpc";
 import { ArrowUpRight, FolderKanban, Github } from "lucide-react";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const systemProfiles = ["API_GATEWAY", "ML_INFERENCE", "CLIENT_SYNC", "EVENT_PIPE", "SPATIAL_ANALYSIS", "MEDIA_QUEUE", "CONTENT_NODE"];
 
@@ -13,18 +14,20 @@ function ProjectCover({ title, imageUrl, index }: { title: string; imageUrl: str
 }
 
 export default function Projects() {
+  const { language } = useLanguage();
+  const fr = language === "fr";
   const { data: projects, isLoading, isError } = trpc.projects.list.useQuery();
 
   return (
     <PublicLayout>
       <section className="page-hero">
-        <div className="eyebrow"><FolderKanban size={14} /> Travaux sélectionnés</div>
-        <h1>Des systèmes conçus<br /><em>pour tenir en production.</em></h1>
-        <p>Des cas concrets où l’API, la donnée, le déploiement et l’interface sont traités comme un même système à rendre fiable.</p>
+        <div className="eyebrow"><FolderKanban size={14} /> {fr ? "Travaux sélectionnés" : "Selected work"}</div>
+        <h1>{fr ? "Des systèmes conçus" : "Systems designed"}<br /><em>{fr ? "pour tenir en production." : "to hold up in production."}</em></h1>
+        <p>{fr ? "Des cas concrets où l’API, la donnée, le déploiement et l’interface sont traités comme un même système à rendre fiable." : "Concrete cases where APIs, data, deployment and interfaces are treated as one system to make reliable."}</p>
         <div className="system-registry"><span><i /> REGISTRY: {projects?.length ?? "—"} SYSTEMS</span><span>MODE: CASE_STUDY</span><span>STATUS: DOCUMENTED</span></div>
       </section>
       <section className="project-list-section">
-        {isLoading ? <div className="project-list project-list--skeleton" aria-label="Chargement des projets">{[1, 2, 3].map(item => <div className="project-card project-card--skeleton" key={item}><div className="project-card__cover" /><div className="project-card__content"><div /><div className="project-card__main"><span /><span /><span /></div></div></div>)}</div> : isError ? <div className="empty-public"><FolderKanban size={28} /><p>Les projets sont temporairement indisponibles. Réessayez dans un instant.</p></div> : projects?.length ? (
+        {isLoading ? <div className="project-list project-list--skeleton" aria-label={fr ? "Chargement des projets" : "Loading projects"}>{[1, 2, 3].map(item => <div className="project-card project-card--skeleton" key={item}><div className="project-card__cover" /><div className="project-card__content"><div /><div className="project-card__main"><span /><span /><span /></div></div></div>)}</div> : isError ? <div className="empty-public"><FolderKanban size={28} /><p>{fr ? "Les projets sont temporairement indisponibles. Réessayez dans un instant." : "Projects are temporarily unavailable. Please try again shortly."}</p></div> : projects?.length ? (
           <div className="project-list">
             {projects.map((project, index) => (
               <article className="project-card" key={project.id}>
@@ -39,13 +42,13 @@ export default function Projects() {
                   </div>
                   <div className="project-card__actions">
                     <Link href={`/projets/${project.slug}`} aria-label={`Voir ${project.title}`} className="round-link"><ArrowUpRight size={20} /></Link>
-                    {project.githubUrl ? <a href={project.githubUrl} target="_blank" rel="noreferrer" className="icon-text"><Github size={16} /> Code</a> : null}
+                    {project.githubUrl ? <a href={project.githubUrl} target="_blank" rel="noreferrer" className="icon-text"><Github size={16} /> {fr ? "Code" : "Source"}</a> : null}
                   </div>
                 </div>
               </article>
             ))}
           </div>
-        ) : <div className="empty-public"><FolderKanban size={28} /><p>Les projets publiés apparaîtront bientôt ici.</p></div>}
+        ) : <div className="empty-public"><FolderKanban size={28} /><p>{fr ? "Les projets publiés apparaîtront bientôt ici." : "Published projects will appear here soon."}</p></div>}
       </section>
     </PublicLayout>
   );

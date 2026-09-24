@@ -9,6 +9,7 @@ import { adminProcedure, publicProcedure, router } from "./_core/trpc";
 import { systemRouter } from "./_core/systemRouter";
 import { sendContactEmail } from "./email";
 import { storagePut } from "./storage";
+import { ENV } from "./_core/env";
 
 const stringList = z.array(z.string().trim().min(1).max(80)).max(20);
 const optionalUrl = z.string().url().max(1024).optional().nullable();
@@ -116,7 +117,13 @@ function parseImage(dataUrl: string) {
 export const appRouter = router({
   system: systemRouter,
   auth: router({
-    me: publicProcedure.query(opts => opts.ctx.user),
+    me: publicProcedure.query(opts => {
+      const user = opts.ctx.user;
+      if (user && ENV.ownerOpenId && user.openId === ENV.ownerOpenId && user.role !== "admin") {
+        return { ...user, role: "admin" as const };
+      }
+      return user;
+    }),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });

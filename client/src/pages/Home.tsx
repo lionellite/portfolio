@@ -2,6 +2,7 @@ import PublicLayout from "@/components/PublicLayout";
 import { trpc } from "@/lib/trpc";
 import { ArrowRight, ArrowUpRight, Check, Cloud, Code2, Database, Github, Linkedin, Mail, Server, ShieldCheck, Workflow } from "lucide-react";
 import { Link } from "wouter";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const serviceModules = [
   { icon: Code2, title: "Backend & API", text: "Services Python robustes, APIs REST documentées et intégrations conçues pour rester lisibles quand le produit grandit." },
@@ -31,6 +32,7 @@ const processDetails = [
 ];
 
 export default function Home() {
+  const { language, t } = useLanguage();
   const { data, isLoading } = trpc.portfolio.get.useQuery();
   const { data: projects } = trpc.projects.list.useQuery();
   const profile = data?.profile;
@@ -42,18 +44,18 @@ export default function Home() {
       <section className="lite-hero">
         <div className="lite-hero__content">
           <div className="lite-mark" aria-hidden="true">LA</div>
-          <p className="lite-eyebrow">LIONEL ADOUKONOU · BACKEND / DEVOPS / CLOUD</p>
-          <h1>Je construis des systèmes fiables,<br /><span>une ligne de code à la fois.</span></h1>
-          <p className="lite-lede">{profile?.bio ?? "Ingénieur Backend et DevOps, je conçois des APIs, des automatisations et des infrastructures pensées pour être comprises, déployées et maintenues."}</p>
+          <p className="lite-eyebrow">{t("heroEyebrow")}</p>
+          <h1>{t("heroTitle")}<br /><span>{t("heroTitleAccent")}</span></h1>
+          <p className="lite-lede">{language === "fr" ? (profile?.bio ?? "Ingénieur Backend et DevOps, je conçois des APIs, des automatisations et des infrastructures pensées pour être comprises, déployées et maintenues.") : "Backend and DevOps engineer building APIs, automation and infrastructure that teams can understand, deploy and maintain."}</p>
           <div className="lite-actions">
-            <Link href="/projets" className="lite-button lite-button--primary">Explorer mes projets <ArrowRight size={17} /></Link>
-            <Link href="/contact" className="lite-button lite-button--outline">Démarrer une conversation <Mail size={16} /></Link>
+            <Link href="/projets" className="lite-button lite-button--primary">{t("exploreProjects")} <ArrowRight size={17} /></Link>
+            <Link href="/contact" className="lite-button lite-button--outline">{t("startConversation")} <Mail size={16} /></Link>
           </div>
         </div>
         <div className="lite-hero__profile-card">
-          <div className="lite-profile-card__header"><span>PROFILE_MODULE</span><strong>AVAILABLE</strong></div>
-          <div className="lite-profile-card__body"><span className="lite-profile-card__initials">LA</span><div><strong>{profile?.fullName ?? "Lionel Adoukonou"}</strong><p>{profile?.headline ?? "Backend / DevOps Engineer"}</p></div></div>
-          <div className="lite-profile-card__facts"><div><span>FOCUS</span><strong>BACKEND</strong></div><div><span>STACK</span><strong>PY / LINUX</strong></div><div><span>ZONE</span><strong>{profile?.location ?? "Bénin"}</strong></div></div>
+          <div className="lite-profile-card__header"><span>{t("profileModule")}</span><strong>{t("available")}</strong></div>
+          <div className="lite-profile-card__body"><span className="lite-profile-card__initials">LA</span><div><strong>{profile?.fullName ?? "Lionel Adoukonou"}</strong><p>{language === "fr" ? (profile?.headline ?? "Backend / DevOps Engineer") : "Backend Python Developer · DevOps · Cloud & Infrastructure"}</p></div></div>
+          <div className="lite-profile-card__facts"><div><span>{t("focus")}</span><strong>{t("backend")}</strong></div><div><span>{t("stack")}</span><strong>PY / LINUX</strong></div><div><span>{t("zone")}</span><strong>{profile?.location ?? "Bénin"}</strong></div></div>
           <div className="lite-profile-card__note"><span /> {profile?.availability ?? "Ouvert aux opportunités techniques"}</div>
         </div>
       </section>
@@ -78,16 +80,16 @@ export default function Home() {
       </section>
 
       <section className="lite-section lite-quality">
-        <div className="lite-section__heading"><p className="lite-eyebrow">ENGAGEMENT QUALITÉ</p><h2>La fiabilité se<br /><span>prépare en amont.</span></h2></div>
+        <div className="lite-section__heading"><p className="lite-eyebrow">{t("qualityEyebrow")}</p><h2>{t("qualityTitle")}<br /><span>{t("qualityAccent")}</span></h2></div>
         <div className="lite-quality__grid">{qualityCommitments.map((item) => <div className="lite-quality__item" key={item}><span><Check size={15} /></span><p>{item}</p></div>)}</div>
       </section>
 
       <section className="lite-section lite-section--projects" id="projets">
-        <div className="lite-section__heading lite-section__heading--row"><div><p className="lite-eyebrow">PROJETS SÉLECTIONNÉS</p><h2>Des systèmes<br /><span>mis en production.</span></h2></div><Link href="/projets" className="lite-text-link">Voir tous les projets <ArrowUpRight size={16} /></Link></div>
+        <div className="lite-section__heading lite-section__heading--row"><div><p className="lite-eyebrow">{t("selectedProjects")}</p><h2>{t("projectsTitle")}<br /><span>{t("projectsAccent")}</span></h2></div><Link href="/projets" className="lite-text-link">{t("viewAll")} <ArrowUpRight size={16} /></Link></div>
         <div className="lite-project-grid">{isLoading ? [1, 2, 3].map((item) => <div className="lite-project-skeleton" key={item} />) : visibleProjects.map((project, index) => <article className="lite-project" key={project.id}><Link href={`/projets/${project.slug}`} className="lite-project__visual"><span>SYS.{String(index + 1).padStart(2, "0")}</span><div className="lite-project__lines" /><strong>{project.title.slice(0, 2).toUpperCase()}</strong></Link><div className="lite-project__body"><div><p className="lite-eyebrow">CASE STUDY · {project.technologies.slice(0, 2).join(" / ")}</p><h3>{project.title}</h3><p>{project.shortDescription}</p></div><Link href={`/projets/${project.slug}`} aria-label={`Voir le projet ${project.title}`}><ArrowUpRight size={18} /></Link></div></article>)}</div>
       </section>
 
-      <section className="lite-contact-cta"><p className="lite-eyebrow">OUVRIR UN CANAL</p><h2>Un système à clarifier ?</h2><p>API, automatisation, déploiement ou infrastructure : partagez le contexte et les contraintes. Je vous répondrai avec une première lecture utile.</p><Link href="/contact" className="lite-button lite-button--light">Parler de votre besoin <ArrowRight size={17} /></Link><div className="lite-socials"><a href={profile?.githubUrl ?? "https://github.com/lionellite"} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17} /></a><a href={profile?.linkedinUrl ?? "https://linkedin.com/in/lionellite"} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17} /></a><a href={`mailto:${profile?.email ?? "liolisena@gmail.com"}`} aria-label="E-mail"><Mail size={17} /></a></div></section>
+      <section className="lite-contact-cta"><p className="lite-eyebrow">{t("openChannel")}</p><h2>{t("contactCta")}</h2><p>{t("contactCtaText")}</p><Link href="/contact" className="lite-button lite-button--light">{t("talkNeed")} <ArrowRight size={17} /></Link><div className="lite-socials"><a href={profile?.githubUrl ?? "https://github.com/lionellite"} target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17} /></a><a href={profile?.linkedinUrl ?? "https://linkedin.com/in/lionellite"} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17} /></a><a href={`mailto:${profile?.email ?? "liolisena@gmail.com"}`} aria-label="E-mail"><Mail size={17} /></a></div></section>
     </PublicLayout>
   );
 }
