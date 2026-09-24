@@ -1,122 +1,113 @@
-# 🌟 Portfolio Dynamique & Espace d'Administration Secret — Lionel Adoukonou
+# Lionel Adoukonou Portfolio
 
-Ce projet est un portfolio professionnel sur mesure développé pour **Lionel Adoukonou**, basé sur son CV premium, le design raffiné du template **vcard-personal-portfolio** (thème sombre élégant avec accents dorés), et enrichi d'un **système d'administration complet et invisible** sous Python Flask & SQLite.
+Personal portfolio for **Lionel Adoukonou**, Backend, DevOps and Cloud engineer. The project combines a public portfolio for the profile, projects, technical notes and contact with a private OAuth-protected administration console.
 
----
+The public interface uses English by default and automatically detects French browser preferences. Visitors can switch between English and French from the language control in the header; the choice is persisted locally.
 
-## 🚀 Fonctionnalités Clés / Key Features
+## Features
 
-### 🇫🇷 🇬🇧 Bilingue par défaut (Bilingual by Default)
-*   **Détection automatique** de la langue préférée via l'en-tête de requête HTTP `Accept-Language` du navigateur (Français par défaut).
-*   **Sélecteur manuel** (FR / EN) flottant et élégant en haut à gauche de la page.
-*   **Persistance de la langue** sélectionnée dans la session Flask pour garantir une expérience utilisateur fluide lors du parcours du portfolio.
+- Responsive public pages: home, projects, project details, blog, blog details and contact.
+- Static profile card and editorial blue/graphite visual system with no WebGL or 3D runtime.
+- Automatic language detection with English fallback and an English/French switcher.
+- Private admin console for profile, skills, experience, education, projects, articles and messages.
+- OAuth authentication through Manus.
+- Owner access recognized through `OWNER_OPEN_ID` even when the persisted user role has not yet synchronized to `admin`.
+- Server-side `adminProcedure` protection for every administrative query and mutation.
+- S3-compatible image storage for portraits and project covers.
+- Sanitized rich text for blog content.
+- Resend notifications for contact messages.
+- Loading, error and empty states throughout the public and admin experiences.
 
-### 🛡️ Espace Secrète Admin Dissimulé (Secure-by-Obscurity Admin Portal)
-*   **Conception ultra-sécurisée** : L'accès à la page de connexion s'effectue via une route dynamique entièrement configurable par variable d'environnement (`ADMIN_LOGIN_ROUTE`, par défaut `/lionel-login`).
-*   **Incognito total (404 Not Found)** : Toute requête vers `/admin` ou vers les actions CRUD sans authentification retourne un statut HTTP **404 (Introuvable)** plutôt qu'un 403 (Interdit) ou une redirection de connexion standard. Cela dissimule totalement l'existence de l'interface d'administration aux yeux d'éventuels attaquants ou curieux.
-*   **Contrôle CRUD complet** pour toutes les sections :
-    *   **Profil / Identité** (Modifier le nom, les titres bilingues, la bio bilingue, l'adresse email, le numéro de téléphone, les liens LinkedIn / GitHub et téléverser un nouvel avatar).
-    *   **Formations (Education)**.
-    *   **Expériences professionnelles** (gère des listes à puces dynamiques stockées au format JSON).
-    *   **Compétences (Skills)**.
-    *   **Projets** (Ajouter/modifier un projet avec titre, stack, description bilingue, téléversement de fichier image ou lien URL d'image, liens GitHub/Démo et ordre d'affichage).
-    *   **Articles de Blog** (Créer/éditer des articles bilingues).
-    *   **Boîte de réception des messages** (Consulter et supprimer les messages reçus via le formulaire de contact public).
+## Stack
 
-### 🎨 Design Premium Dark & Gold
-*   Adaptation parfaite de la palette de couleurs dorée et sombre (`bg-cv`, doré accent `#C9A96E`, texte clair `#F0ECE3`, cartes `#222222`).
-*   Intégration d'effets visuels soignés, d'animations responsives, d'un formulaire de contact asynchrone avec alertes dynamiques (flash messages), et d'icônes vectorielles.
+| Layer | Technology |
+| --- | --- |
+| Client | React 19, TypeScript, Vite, Wouter, TanStack Query, Tailwind CSS 4, Lucide |
+| Server | Express, tRPC 11, SuperJSON |
+| Data | Drizzle ORM, MySQL/TiDB |
+| Authentication | Manus OAuth |
+| Storage | S3-compatible object storage |
+| Email | Resend |
+| Testing | Vitest |
 
----
+## Getting started
 
-## 🛠️ Stack Technique / Tech Stack
+Use Node.js 22 and pnpm. The runtime must provide a reachable database and the environment variables listed below. Never commit a `.env` file or a secret.
 
-*   **Backend** : Python 3.12, Flask, Flask-SQLAlchemy (ORM)
-*   **Base de données** : SQLite (légère, autonome et intégrée)
-*   **Frontend** : HTML5, CSS3, JavaScript (Jinja2 Templates, Tailwind CSS/Styles personnalisés optimisés)
-*   **Sécurité** : `Werkzeug` (`secure_filename` pour les téléversements)
-
----
-
-## 💻 Installation & Lancement / Quick Start
-
-### 1. Cloner le dépôt et entrer dans le dossier
 ```bash
-git clone <url-du-depot>
-cd portfolio
+pnpm install
+pnpm dev
 ```
 
-### 2. Créer et activer l'environnement virtuel
+The development server runs the client and application server together.
+
+## Quality checks
+
+Run the following before opening a pull request:
+
 ```bash
-python -m venv venv
-source venv/bin/activate  # Sur Windows: venv\Scripts\activate
+pnpm check
+pnpm test
+pnpm build
 ```
 
-### 3. Installer les dépendances
+The focused authentication, authorization, content and security tests run without external email credentials. The Resend integration tests require `RESEND_API_KEY` when the full suite is executed.
+
+## Environment variables
+
+| Variable | Purpose |
+| --- | --- |
+| `DATABASE_URL` | MySQL/TiDB connection string |
+| `JWT_SECRET` | Session cookie signing secret |
+| `VITE_APP_ID` | Manus OAuth application ID |
+| `OAUTH_SERVER_URL` | OAuth service URL |
+| `VITE_OAUTH_PORTAL_URL` | OAuth login portal URL exposed to the client |
+| `OWNER_OPEN_ID` | Open ID of the portfolio owner; grants admin access |
+| `RESEND_API_KEY` | Resend API key for contact notifications |
+| `BUILT_IN_FORGE_API_URL` / `BUILT_IN_FORGE_API_KEY` | Manus built-in services |
+| Storage variables | Provided by the configured WebDev environment |
+
+Secrets must remain server-side. Do not expose database URLs, JWT secrets, Resend keys or OAuth credentials in client code.
+
+## Administration
+
+Open `/admin` and use the Manus OAuth sign-in flow. The server grants administrative access only to a user with the `admin` role or to the user whose `openId` matches `OWNER_OPEN_ID`. Administrative procedures remain protected server-side even if a user manually navigates to an admin route.
+
+After authentication, the console provides dedicated areas for:
+
+- Profile, skills, experience and education.
+- Published and draft projects, including image uploads.
+- Blog articles and rich text content.
+- Contact messages and notification status.
+
+See [ADMIN_GUIDE.md](ADMIN_GUIDE.md) for the operational workflow. Additional technical documentation is available in [docs/](docs/).
+
+## Repository structure
+
+```text
+client/             React pages, components, contexts and global styles
+server/             tRPC routers, authentication, database helpers and services
+drizzle/            Drizzle schema and migrations
+shared/             Shared constants and types
+docs/               Architecture, deployment, operations and troubleshooting guides
+ADMIN_GUIDE.md      Administration guide
+todo.md             Project implementation history
+```
+
+## Git workflow
+
+Use a feature branch for changes and open a pull request against `master`:
+
 ```bash
-pip install -r requirements.txt
-```
-*(Note : Si le fichier `requirements.txt` n'est pas présent, installez les dépendances directement via : `pip install Flask Flask-SQLAlchemy python-dotenv`)*
-
-### 4. Configurer les variables d'environnement
-Copiez le fichier exemple `.env.example` vers `.env` et ajustez les paramètres d'administration secrets :
-```bash
-cp .env.example .env
+git switch -c feature/admin-i18n-readme
+git add .
+git commit -m "fix: restore admin access and add bilingual interface"
+git push -u github feature/admin-i18n-readme
+gh pr create --repo lionellite/portfolio --base master --head feature/admin-i18n-readme
 ```
 
-Contenu typique du fichier `.env` :
-```env
-SECRET_KEY=une-cle-securisee-et-unique
-DATABASE_URL=sqlite:///instance/portfolio.db
+Do not force-push or merge an unrelated repository into `master` without reviewing the PR diff and confirming the intended replacement. This repository is prepared to be reviewed as a complete portfolio application.
 
-# Configuration d'accès secret à l'administration
-ADMIN_LOGIN_ROUTE=ma-route-secrete-lionel
-ADMIN_USER=lionel
-ADMIN_PASSWORD=adoukonou2026
-```
+## License
 
-### 5. Lancement de l'application
-Démarrez le serveur Flask en exécutant le script `run.py` :
-```bash
-python run.py
-```
-*   **Base de données auto-initialisée** : Si la base de données est vide au premier lancement, l'application exécute automatiquement le script de peuplement (`seeds.py`) pour injecter instantanément l'intégralité du CV de Lionel.
-*   **Portfolio public** : Disponible à l'adresse [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
-*   **Espace Secret de Connexion** : Disponible à l'adresse [http://127.0.0.1:5000/ma-route-secrete-lionel](http://127.0.0.1:5000/ma-route-secrete-lionel) (selon votre valeur configurée pour `ADMIN_LOGIN_ROUTE`).
-
----
-
-## 🧪 Tests Automatisés / Testing
-
-Le projet est fourni avec une suite de tests unitaires et d'intégration validant les fonctionnalités critiques (détection de la langue, protection hermétique de l'espace admin, soumission des formulaires de contact).
-
-Pour exécuter les tests :
-```bash
-PYTHONPATH=. pytest tests/
-```
-
----
-
-## 📂 Structure du Projet / Directory Structure
-
-```
-├── app.py                  # Initialisation de l'application Flask et routes du portfolio / admin
-├── config.py               # Gestion de la configuration et des variables d'environnement (.env)
-├── models.py               # Schéma de base de données SQLAlchemy (bilingue)
-├── run.py                  # Point d'entrée de l'application Flask
-├── seeds.py                # Script de seeding automatique (CV de Lionel Adoukonou)
-├── .env.example            # Fichier d'exemple pour la configuration locale
-├── static/
-│   ├── css/                # Feuilles de styles (style.css d'origine)
-│   ├── js/                 # Scripts interactifs de l'interface (script.js)
-│   ├── images/             # Icônes et images statiques d'origine
-│   └── uploads/            # Dossier dynamique pour stocker les avatars et images de projets téléversés
-├── templates/
-│   ├── public/
-│   │   └── index.html      # Vue publique principale du portfolio responsive bilingue
-│   └── admin/
-│       ├── login.html      # Page de connexion secrète élégante
-│       └── dashboard.html  # Panneau de contrôle complet pour gérer tout le site (CRUD)
-└── tests/
-    └── test_portfolio.py   # Suite de tests automatisée pour le routage et la sécurité
-```
+The source is distributed under the MIT license. Personal content, photography, written material and brand elements remain under Lionel Adoukonou’s control.
