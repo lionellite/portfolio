@@ -82,6 +82,14 @@ After authentication, the console provides dedicated areas for:
 
 See [ADMIN_GUIDE.md](ADMIN_GUIDE.md) for the operational workflow. Additional technical documentation is available in [docs/](docs/).
 
+## Vercel
+
+The project is prepared for Vercel with a serverless Express entrypoint at `api/index.ts` and the deployment rules in `vercel.json`. Import the GitHub repository, use `pnpm install --frozen-lockfile`, `pnpm build`, and `dist/public` as the output directory, then configure the environment variables described in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). The OAuth callback must use the deployed Vercel URL ending in `/api/oauth/callback`.
+
+## CV
+
+The French one-page CV uses the portfolio’s blue editorial and technical visual language. The editable Typst source is in `cv/main.typ`; the ready-to-send PDF is `cv/Lionel-Adoukonou-CV-FR.pdf`.
+
 ## Repository structure
 
 ```text
