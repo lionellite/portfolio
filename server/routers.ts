@@ -10,6 +10,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { sendContactEmail } from "./email";
 import { storagePut } from "./storage";
 import { ENV } from "./_core/env";
+import { clearAdminSession } from "./_core/localAuth";
 
 const stringList = z.array(z.string().trim().min(1).max(80)).max(20);
 const optionalUrl = z.string().url().max(1024).optional().nullable();
@@ -127,6 +128,7 @@ export const appRouter = router({
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
+      clearAdminSession(ctx.res);
       return { success: true } as const;
     }),
   }),

@@ -54479,6 +54479,165 @@ var require_dist = __commonJS({
   }
 });
 
+// node_modules/.pnpm/cookie@1.0.2/node_modules/cookie/dist/index.js
+var require_dist2 = __commonJS({
+  "node_modules/.pnpm/cookie@1.0.2/node_modules/cookie/dist/index.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.parse = parse3;
+    exports2.serialize = serialize;
+    var cookieNameRegExp = /^[\u0021-\u003A\u003C\u003E-\u007E]+$/;
+    var cookieValueRegExp = /^[\u0021-\u003A\u003C-\u007E]*$/;
+    var domainValueRegExp = /^([.]?[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)([.][a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)*$/i;
+    var pathValueRegExp = /^[\u0020-\u003A\u003D-\u007E]*$/;
+    var __toString = Object.prototype.toString;
+    var NullObject = /* @__PURE__ */ (() => {
+      const C = function() {
+      };
+      C.prototype = /* @__PURE__ */ Object.create(null);
+      return C;
+    })();
+    function parse3(str, options) {
+      const obj = new NullObject();
+      const len = str.length;
+      if (len < 2)
+        return obj;
+      const dec = options?.decode || decode4;
+      let index = 0;
+      do {
+        const eqIdx = str.indexOf("=", index);
+        if (eqIdx === -1)
+          break;
+        const colonIdx = str.indexOf(";", index);
+        const endIdx = colonIdx === -1 ? len : colonIdx;
+        if (eqIdx > endIdx) {
+          index = str.lastIndexOf(";", eqIdx - 1) + 1;
+          continue;
+        }
+        const keyStartIdx = startIndex(str, index, eqIdx);
+        const keyEndIdx = endIndex(str, eqIdx, keyStartIdx);
+        const key = str.slice(keyStartIdx, keyEndIdx);
+        if (obj[key] === void 0) {
+          let valStartIdx = startIndex(str, eqIdx + 1, endIdx);
+          let valEndIdx = endIndex(str, endIdx, valStartIdx);
+          const value = dec(str.slice(valStartIdx, valEndIdx));
+          obj[key] = value;
+        }
+        index = endIdx + 1;
+      } while (index < len);
+      return obj;
+    }
+    function startIndex(str, index, max) {
+      do {
+        const code = str.charCodeAt(index);
+        if (code !== 32 && code !== 9)
+          return index;
+      } while (++index < max);
+      return max;
+    }
+    function endIndex(str, index, min) {
+      while (index > min) {
+        const code = str.charCodeAt(--index);
+        if (code !== 32 && code !== 9)
+          return index + 1;
+      }
+      return min;
+    }
+    function serialize(name, val, options) {
+      const enc = options?.encode || encodeURIComponent;
+      if (!cookieNameRegExp.test(name)) {
+        throw new TypeError(`argument name is invalid: ${name}`);
+      }
+      const value = enc(val);
+      if (!cookieValueRegExp.test(value)) {
+        throw new TypeError(`argument val is invalid: ${val}`);
+      }
+      let str = name + "=" + value;
+      if (!options)
+        return str;
+      if (options.maxAge !== void 0) {
+        if (!Number.isInteger(options.maxAge)) {
+          throw new TypeError(`option maxAge is invalid: ${options.maxAge}`);
+        }
+        str += "; Max-Age=" + options.maxAge;
+      }
+      if (options.domain) {
+        if (!domainValueRegExp.test(options.domain)) {
+          throw new TypeError(`option domain is invalid: ${options.domain}`);
+        }
+        str += "; Domain=" + options.domain;
+      }
+      if (options.path) {
+        if (!pathValueRegExp.test(options.path)) {
+          throw new TypeError(`option path is invalid: ${options.path}`);
+        }
+        str += "; Path=" + options.path;
+      }
+      if (options.expires) {
+        if (!isDate2(options.expires) || !Number.isFinite(options.expires.valueOf())) {
+          throw new TypeError(`option expires is invalid: ${options.expires}`);
+        }
+        str += "; Expires=" + options.expires.toUTCString();
+      }
+      if (options.httpOnly) {
+        str += "; HttpOnly";
+      }
+      if (options.secure) {
+        str += "; Secure";
+      }
+      if (options.partitioned) {
+        str += "; Partitioned";
+      }
+      if (options.priority) {
+        const priority = typeof options.priority === "string" ? options.priority.toLowerCase() : void 0;
+        switch (priority) {
+          case "low":
+            str += "; Priority=Low";
+            break;
+          case "medium":
+            str += "; Priority=Medium";
+            break;
+          case "high":
+            str += "; Priority=High";
+            break;
+          default:
+            throw new TypeError(`option priority is invalid: ${options.priority}`);
+        }
+      }
+      if (options.sameSite) {
+        const sameSite = typeof options.sameSite === "string" ? options.sameSite.toLowerCase() : options.sameSite;
+        switch (sameSite) {
+          case true:
+          case "strict":
+            str += "; SameSite=Strict";
+            break;
+          case "lax":
+            str += "; SameSite=Lax";
+            break;
+          case "none":
+            str += "; SameSite=None";
+            break;
+          default:
+            throw new TypeError(`option sameSite is invalid: ${options.sameSite}`);
+        }
+      }
+      return str;
+    }
+    function decode4(str) {
+      if (str.indexOf("%") === -1)
+        return str;
+      try {
+        return decodeURIComponent(str);
+      } catch (e) {
+        return str;
+      }
+    }
+    function isDate2(val) {
+      return __toString.call(val) === "[object Date]";
+    }
+  }
+});
+
 // node_modules/.pnpm/delayed-stream@1.0.0/node_modules/delayed-stream/lib/delayed_stream.js
 var require_delayed_stream = __commonJS({
   "node_modules/.pnpm/delayed-stream@1.0.0/node_modules/delayed-stream/lib/delayed_stream.js"(exports2, module2) {
@@ -55906,165 +56065,6 @@ var require_follow_redirects = __commonJS({
     }
     module2.exports = wrap({ http: http2, https: https2 });
     module2.exports.wrap = wrap;
-  }
-});
-
-// node_modules/.pnpm/cookie@1.0.2/node_modules/cookie/dist/index.js
-var require_dist2 = __commonJS({
-  "node_modules/.pnpm/cookie@1.0.2/node_modules/cookie/dist/index.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.parse = parse3;
-    exports2.serialize = serialize;
-    var cookieNameRegExp = /^[\u0021-\u003A\u003C\u003E-\u007E]+$/;
-    var cookieValueRegExp = /^[\u0021-\u003A\u003C-\u007E]*$/;
-    var domainValueRegExp = /^([.]?[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)([.][a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)*$/i;
-    var pathValueRegExp = /^[\u0020-\u003A\u003D-\u007E]*$/;
-    var __toString = Object.prototype.toString;
-    var NullObject = /* @__PURE__ */ (() => {
-      const C = function() {
-      };
-      C.prototype = /* @__PURE__ */ Object.create(null);
-      return C;
-    })();
-    function parse3(str, options) {
-      const obj = new NullObject();
-      const len = str.length;
-      if (len < 2)
-        return obj;
-      const dec = options?.decode || decode4;
-      let index = 0;
-      do {
-        const eqIdx = str.indexOf("=", index);
-        if (eqIdx === -1)
-          break;
-        const colonIdx = str.indexOf(";", index);
-        const endIdx = colonIdx === -1 ? len : colonIdx;
-        if (eqIdx > endIdx) {
-          index = str.lastIndexOf(";", eqIdx - 1) + 1;
-          continue;
-        }
-        const keyStartIdx = startIndex(str, index, eqIdx);
-        const keyEndIdx = endIndex(str, eqIdx, keyStartIdx);
-        const key = str.slice(keyStartIdx, keyEndIdx);
-        if (obj[key] === void 0) {
-          let valStartIdx = startIndex(str, eqIdx + 1, endIdx);
-          let valEndIdx = endIndex(str, endIdx, valStartIdx);
-          const value = dec(str.slice(valStartIdx, valEndIdx));
-          obj[key] = value;
-        }
-        index = endIdx + 1;
-      } while (index < len);
-      return obj;
-    }
-    function startIndex(str, index, max) {
-      do {
-        const code = str.charCodeAt(index);
-        if (code !== 32 && code !== 9)
-          return index;
-      } while (++index < max);
-      return max;
-    }
-    function endIndex(str, index, min) {
-      while (index > min) {
-        const code = str.charCodeAt(--index);
-        if (code !== 32 && code !== 9)
-          return index + 1;
-      }
-      return min;
-    }
-    function serialize(name, val, options) {
-      const enc = options?.encode || encodeURIComponent;
-      if (!cookieNameRegExp.test(name)) {
-        throw new TypeError(`argument name is invalid: ${name}`);
-      }
-      const value = enc(val);
-      if (!cookieValueRegExp.test(value)) {
-        throw new TypeError(`argument val is invalid: ${val}`);
-      }
-      let str = name + "=" + value;
-      if (!options)
-        return str;
-      if (options.maxAge !== void 0) {
-        if (!Number.isInteger(options.maxAge)) {
-          throw new TypeError(`option maxAge is invalid: ${options.maxAge}`);
-        }
-        str += "; Max-Age=" + options.maxAge;
-      }
-      if (options.domain) {
-        if (!domainValueRegExp.test(options.domain)) {
-          throw new TypeError(`option domain is invalid: ${options.domain}`);
-        }
-        str += "; Domain=" + options.domain;
-      }
-      if (options.path) {
-        if (!pathValueRegExp.test(options.path)) {
-          throw new TypeError(`option path is invalid: ${options.path}`);
-        }
-        str += "; Path=" + options.path;
-      }
-      if (options.expires) {
-        if (!isDate2(options.expires) || !Number.isFinite(options.expires.valueOf())) {
-          throw new TypeError(`option expires is invalid: ${options.expires}`);
-        }
-        str += "; Expires=" + options.expires.toUTCString();
-      }
-      if (options.httpOnly) {
-        str += "; HttpOnly";
-      }
-      if (options.secure) {
-        str += "; Secure";
-      }
-      if (options.partitioned) {
-        str += "; Partitioned";
-      }
-      if (options.priority) {
-        const priority = typeof options.priority === "string" ? options.priority.toLowerCase() : void 0;
-        switch (priority) {
-          case "low":
-            str += "; Priority=Low";
-            break;
-          case "medium":
-            str += "; Priority=Medium";
-            break;
-          case "high":
-            str += "; Priority=High";
-            break;
-          default:
-            throw new TypeError(`option priority is invalid: ${options.priority}`);
-        }
-      }
-      if (options.sameSite) {
-        const sameSite = typeof options.sameSite === "string" ? options.sameSite.toLowerCase() : options.sameSite;
-        switch (sameSite) {
-          case true:
-          case "strict":
-            str += "; SameSite=Strict";
-            break;
-          case "lax":
-            str += "; SameSite=Lax";
-            break;
-          case "none":
-            str += "; SameSite=None";
-            break;
-          default:
-            throw new TypeError(`option sameSite is invalid: ${options.sameSite}`);
-        }
-      }
-      return str;
-    }
-    function decode4(str) {
-      if (str.indexOf("%") === -1)
-        return str;
-      try {
-        return decodeURIComponent(str);
-      } catch (e) {
-        return str;
-      }
-    }
-    function isDate2(val) {
-      return __toString.call(val) === "[object Date]";
-    }
   }
 });
 
@@ -78117,6 +78117,86 @@ async function storagePut(relKey, data, contentType = "application/octet-stream"
   return { key, url: `/manus-storage/${key}` };
 }
 
+// server/_core/localAuth.ts
+var import_node_crypto = require("node:crypto");
+var import_cookie = __toESM(require_dist2(), 1);
+var LOCAL_ADMIN_COOKIE = "portfolio_admin_session";
+var SESSION_TTL_MS = 1e3 * 60 * 60 * 12;
+var attempts = /* @__PURE__ */ new Map();
+function secretKey() {
+  return ENV.cookieSecret || "development-only-change-me";
+}
+function verifyAdminPassword(password) {
+  const stored = process.env.ADMIN_PASSWORD_HASH ?? "";
+  const [algorithm, salt, expected] = stored.split("$");
+  if (algorithm !== "scrypt" || !salt || !expected || expected.length !== 128) return false;
+  try {
+    const actual = (0, import_node_crypto.scryptSync)(password, salt, 64, { N: 16384, r: 8, p: 1 }).toString("hex");
+    return (0, import_node_crypto.timingSafeEqual)(Buffer.from(actual, "hex"), Buffer.from(expected, "hex"));
+  } catch {
+    return false;
+  }
+}
+function signature(payload) {
+  return (0, import_node_crypto.createHmac)("sha256", secretKey()).update(payload).digest("base64url");
+}
+function createAdminSession(res, req) {
+  const payload = `admin.${Date.now() + SESSION_TTL_MS}`;
+  const token = `${payload}.${signature(payload)}`;
+  res.cookie(LOCAL_ADMIN_COOKIE, token, {
+    httpOnly: true,
+    secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+    sameSite: "lax",
+    path: "/",
+    maxAge: SESSION_TTL_MS
+  });
+}
+function clearAdminSession(res) {
+  res.clearCookie(LOCAL_ADMIN_COOKIE, { httpOnly: true, sameSite: "lax", path: "/" });
+}
+function isValidAdminSession(req) {
+  const token = (0, import_cookie.parse)(req.headers.cookie ?? "")[LOCAL_ADMIN_COOKIE];
+  if (!token) return false;
+  const parts = token.split(".");
+  if (parts.length !== 3 || parts[0] !== "admin") return false;
+  const payload = `${parts[0]}.${parts[1]}`;
+  const expected = signature(payload);
+  if (parts[2].length !== expected.length) return false;
+  try {
+    return Number(parts[1]) > Date.now() && (0, import_node_crypto.timingSafeEqual)(Buffer.from(parts[2]), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
+function getLocalAdminUser() {
+  const now = /* @__PURE__ */ new Date();
+  return {
+    id: 0,
+    openId: "local-admin",
+    name: "Lionel Adoukonou",
+    email: "admin@local.portfolio",
+    loginMethod: "password",
+    role: "admin",
+    createdAt: now,
+    updatedAt: now,
+    lastSignedIn: now
+  };
+}
+function isRateLimited(key) {
+  const now = Date.now();
+  const current = attempts.get(key);
+  if (!current || current.resetAt <= now) {
+    attempts.set(key, { count: 0, resetAt: now + 15 * 60 * 1e3 });
+    return false;
+  }
+  return current.count >= 5;
+}
+function recordFailedAttempt(key) {
+  const current = attempts.get(key) ?? { count: 0, resetAt: Date.now() + 15 * 60 * 1e3 };
+  current.count += 1;
+  attempts.set(key, current);
+}
+
 // server/routers.ts
 var stringList = external_exports.array(external_exports.string().trim().min(1).max(80)).max(20);
 var optionalUrl = external_exports.string().url().max(1024).optional().nullable();
@@ -78223,6 +78303,7 @@ var appRouter = router({
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
+      clearAdminSession(ctx.res);
       return { success: true };
     })
   }),
@@ -81766,7 +81847,7 @@ var {
 } = axios_default;
 
 // server/_core/sdk.ts
-var import_cookie = __toESM(require_dist2(), 1);
+var import_cookie2 = __toESM(require_dist2(), 1);
 
 // node_modules/.pnpm/jose@6.1.0/node_modules/jose/dist/webapi/lib/buffer_utils.js
 var encoder = new TextEncoder();
@@ -82580,12 +82661,12 @@ var get_sign_verify_key_default = async (alg, key, usage) => {
 };
 
 // node_modules/.pnpm/jose@6.1.0/node_modules/jose/dist/webapi/lib/verify.js
-var verify_default = async (alg, key, signature, data) => {
+var verify_default = async (alg, key, signature2, data) => {
   const cryptoKey = await get_sign_verify_key_default(alg, key, "verify");
   check_key_length_default(alg, cryptoKey);
   const algorithm = subtle_dsa_default(alg, cryptoKey.algorithm);
   try {
-    return await crypto.subtle.verify(algorithm, cryptoKey, signature, data);
+    return await crypto.subtle.verify(algorithm, cryptoKey, signature2, data);
   } catch {
     return false;
   }
@@ -82657,14 +82738,14 @@ async function flattenedVerify(jws, key, options) {
   }
   check_key_type_default(alg, key, "verify");
   const data = concat(encoder.encode(jws.protected ?? ""), encoder.encode("."), typeof jws.payload === "string" ? encoder.encode(jws.payload) : jws.payload);
-  let signature;
+  let signature2;
   try {
-    signature = decode3(jws.signature);
+    signature2 = decode3(jws.signature);
   } catch {
     throw new JWSInvalid("Failed to base64url decode the signature");
   }
   const k = await normalize_key_default(key, alg);
-  const verified = await verify_default(alg, k, signature, data);
+  const verified = await verify_default(alg, k, signature2, data);
   if (!verified) {
     throw new JWSSignatureVerificationFailed();
   }
@@ -82701,11 +82782,11 @@ async function compactVerify(jws, key, options) {
   if (typeof jws !== "string") {
     throw new JWSInvalid("Compact JWS must be a string or Uint8Array");
   }
-  const { 0: protectedHeader, 1: payload, 2: signature, length } = jws.split(".");
+  const { 0: protectedHeader, 1: payload, 2: signature2, length } = jws.split(".");
   if (length !== 3) {
     throw new JWSInvalid("Invalid Compact JWS");
   }
-  const verified = await flattenedVerify({ payload, protected: protectedHeader, signature }, key, options);
+  const verified = await flattenedVerify({ payload, protected: protectedHeader, signature: signature2 }, key, options);
   const result = { payload: verified.payload, protectedHeader: verified.protectedHeader };
   if (typeof key === "function") {
     return { ...result, key: verified.key };
@@ -82960,8 +83041,8 @@ async function jwtVerify(jwt2, key, options) {
 var sign_default = async (alg, key, data) => {
   const cryptoKey = await get_sign_verify_key_default(alg, key, "sign");
   check_key_length_default(alg, cryptoKey);
-  const signature = await crypto.subtle.sign(subtle_dsa_default(alg, cryptoKey.algorithm), cryptoKey, data);
-  return new Uint8Array(signature);
+  const signature2 = await crypto.subtle.sign(subtle_dsa_default(alg, cryptoKey.algorithm), cryptoKey, data);
+  return new Uint8Array(signature2);
 };
 
 // node_modules/.pnpm/jose@6.1.0/node_modules/jose/dist/webapi/jws/flattened/sign.js
@@ -83025,9 +83106,9 @@ var FlattenedSign = class {
     }
     const data = concat(protectedHeader, encoder.encode("."), payload);
     const k = await normalize_key_default(key, alg);
-    const signature = await sign_default(alg, k, data);
+    const signature2 = await sign_default(alg, k, data);
     const jws = {
-      signature: encode5(signature),
+      signature: encode5(signature2),
       payload: ""
     };
     if (b64) {
@@ -83209,7 +83290,7 @@ var SDKServer = class {
     if (!cookieHeader) {
       return /* @__PURE__ */ new Map();
     }
-    const parsed = (0, import_cookie.parse)(cookieHeader);
+    const parsed = (0, import_cookie2.parse)(cookieHeader);
     return new Map(Object.entries(parsed));
   }
   getSessionSecret() {
@@ -83235,12 +83316,12 @@ var SDKServer = class {
     const issuedAt = Date.now();
     const expiresInMs = options.expiresInMs ?? ONE_YEAR_MS;
     const expirationSeconds = Math.floor((issuedAt + expiresInMs) / 1e3);
-    const secretKey = this.getSessionSecret();
+    const secretKey2 = this.getSessionSecret();
     return new SignJWT({
       openId: payload.openId,
       appId: payload.appId,
       name: payload.name
-    }).setProtectedHeader({ alg: "HS256", typ: "JWT" }).setExpirationTime(expirationSeconds).sign(secretKey);
+    }).setProtectedHeader({ alg: "HS256", typ: "JWT" }).setExpirationTime(expirationSeconds).sign(secretKey2);
   }
   async verifySession(cookieValue) {
     if (!cookieValue) {
@@ -83248,8 +83329,8 @@ var SDKServer = class {
       return null;
     }
     try {
-      const secretKey = this.getSessionSecret();
-      const { payload } = await jwtVerify(cookieValue, secretKey, {
+      const secretKey2 = this.getSessionSecret();
+      const { payload } = await jwtVerify(cookieValue, secretKey2, {
         algorithms: ["HS256"]
       });
       const { openId, appId, name } = payload;
@@ -83359,7 +83440,11 @@ var sdk = new SDKServer();
 async function createContext(opts) {
   let user = null;
   try {
-    user = await sdk.authenticateRequest(opts.req);
+    if (isValidAdminSession(opts.req)) {
+      user = getLocalAdminUser();
+    } else {
+      user = await sdk.authenticateRequest(opts.req);
+    }
   } catch (error46) {
     user = null;
   }
@@ -83371,7 +83456,7 @@ async function createContext(opts) {
 }
 
 // server/_core/oauth.ts
-var import_cookie2 = __toESM(require_dist2(), 1);
+var import_cookie3 = __toESM(require_dist2(), 1);
 function getQueryParam(req, key) {
   const value = req.query[key];
   return typeof value === "string" ? value : void 0;
@@ -83385,7 +83470,7 @@ function registerOAuthRoutes(app2) {
       return;
     }
     const { nonce } = decodeOAuthState(state);
-    const expectedNonce = (0, import_cookie2.parse)(req.headers.cookie ?? "")[OAUTH_STATE_COOKIE];
+    const expectedNonce = (0, import_cookie3.parse)(req.headers.cookie ?? "")[OAUTH_STATE_COOKIE];
     if (!nonce || nonce !== expectedNonce) {
       res.status(403).json({ error: "invalid oauth state" });
       return;
@@ -83464,6 +83549,25 @@ function registerStorageProxy(app2) {
 var app = (0, import_express.default)();
 app.use(import_express.default.json({ limit: "50mb" }));
 app.use(import_express.default.urlencoded({ limit: "50mb", extended: true }));
+app.post("/api/admin/login", (req, res) => {
+  const key = String(req.ip ?? "unknown");
+  if (isRateLimited(key)) {
+    res.status(429).json({ error: "Trop de tentatives. R\xE9essayez dans quelques minutes." });
+    return;
+  }
+  const password = typeof req.body?.password === "string" ? req.body.password : "";
+  if (!password || !verifyAdminPassword(password)) {
+    recordFailedAttempt(key);
+    res.status(401).json({ error: "Mot de passe incorrect." });
+    return;
+  }
+  createAdminSession(res, req);
+  res.json({ success: true });
+});
+app.post("/api/admin/logout", (_req, res) => {
+  clearAdminSession(res);
+  res.json({ success: true });
+});
 registerStorageProxy(app);
 registerOAuthRoutes(app);
 app.use(

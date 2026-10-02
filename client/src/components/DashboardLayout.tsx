@@ -19,7 +19,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { startLogin } from "@/const";
+import { trpc } from "@/lib/trpc";
 import { useIsMobile } from "@/hooks/useMobile";
 import { BookOpenText, ExternalLink, FolderKanban, LayoutDashboard, LogOut, Mail, PanelLeft, UserRound } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
@@ -50,6 +50,10 @@ export default function DashboardLayout({
     return saved ? parseInt(saved, 10) : DEFAULT_WIDTH;
   });
   const { loading, user } = useAuth();
+  const utils = trpc.useUtils();
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const [loginPending, setLoginPending] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(SIDEBAR_WIDTH_KEY, sidebarWidth.toString());
@@ -71,13 +75,36 @@ export default function DashboardLayout({
               L’administration est réservée au propriétaire de ce portfolio.
             </p>
           </div>
-          <Button
-            onClick={() => startLogin()}
-            size="lg"
-            className="w-full shadow-lg hover:shadow-xl transition-all"
-          >
-            Se connecter
-          </Button>
+          <form className="w-full space-y-3" onSubmit={async event => {
+            event.preventDefault();
+            setLoginError("");
+            setLoginPending(true);
+            try {
+              const response = await fetch("/api/admin/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ password }),
+              });
+              if (!response.ok) {
+                const data = await response.json().catch(() => null);
+                throw new Error(data?.error || "Connexion refusée.");
+              }
+              setPassword("");
+              await utils.auth.me.invalidate();
+            } catch (error) {
+              setLoginError(error instanceof Error ? error.message : "Connexion refusée.");
+            } finally {
+              setLoginPending(false);
+            }
+          }}>
+            <label htmlFor="admin-password" className="sr-only">Mot de passe administrateur</label>
+            <input id="admin-password" type="password" autoComplete="current-password" value={password} onChange={event => setPassword(event.target.value)} placeholder="Mot de passe administrateur" className="w-full h-12 rounded-md border bg-background px-4 text-sm" required />
+            {loginError ? <p className="text-sm text-destructive" role="alert">{loginError}</p> : null}
+            <Button type="submit" disabled={loginPending} size="lg" className="w-full shadow-lg hover:shadow-xl transition-all">
+              {loginPending ? "Vérification…" : "Ouvrir la console"}
+            </Button>
+          </form>
         </div>
       </div>
     );
